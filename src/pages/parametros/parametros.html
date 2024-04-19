@@ -1,0 +1,19 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+            Parámetros Notificaciones
+        </ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="irBoss()"><ion-icon name="ios-menu"></ion-icon></button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <ion-list *ngFor="let parametro of listaParametros; let i = index ">
+        <ion-item>
+            <ion-label text-wrap>{{parametro.descripcion}}</ion-label>
+            <ion-toggle *ngIf="parametro.valor=='1'" value="parametro.valor" checked="true" color="primary" (ionChange)="habilitarParametro($event, parametro, i)"></ion-toggle>
+            <ion-toggle *ngIf="parametro.valor=='0'" value="parametro.valor" checked="false" color="primary" (ionChange)="habilitarParametro($event, parametro, i)"></ion-toggle>
+        </ion-item>
+    </ion-list>
+</ion-content>

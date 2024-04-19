@@ -1,0 +1,24 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+        </ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <ion-list *ngFor="let tipo of listaTipos" no-lines>
+        <ion-item class="archivos" (click)="verDocumentos(tipo.formato)">
+            <ion-thumbnail item-left>
+                <img *ngIf="tipo.formato == 'jpg'" src="assets/img/fotoIcono.png">
+                <img *ngIf="tipo.formato == 'xlsx' || tipo.formato == 'xls'" src="assets/img/excelIcono.png">
+                <img *ngIf="tipo.formato == 'pdf'" src="assets/img/pdfIcono.png">
+                <img *ngIf="tipo.formato == 'docx' || tipo.formato == 'doc'" src="assets/img/wordIcono.png">
+                <img *ngIf="tipo.formato == 'dwg'" src="assets/img/autocadIcono.png">
+            </ion-thumbnail>
+            <span *ngIf="tipo.formato == 'jpg'">Fotos</span>
+            <span *ngIf="tipo.formato == 'xlsx' || tipo.formato == 'xls'">Excel</span>
+            <span *ngIf="tipo.formato == 'pdf'">PDF</span>
+            <span *ngIf="tipo.formato == 'docx' || tipo.formato == 'doc'">Word</span>
+            <span *ngIf="tipo.formato == 'dwg'">AutoCad</span>
+        </ion-item>
+    </ion-list>
+</ion-content>

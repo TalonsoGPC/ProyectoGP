@@ -1,0 +1,32 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+            Boss
+        </ion-title>
+        <ion-buttons end *ngIf="DatosUsuario.boss == 1">
+            <button ion-button large icon-right color="primary" (click)="irNotificaciones()"><ion-icon name="md-home"></ion-icon></button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-list *ngFor="let item of listaMenuBoss;">
+        <a href="#" (click)="onMenu(item.id)">
+            <ion-item text-wrap>
+                <ion-thumbnail item-left item-rigth>
+                    <img src="assets/img/{{item.logo}}">
+                </ion-thumbnail>
+                <h2>{{item.nombre}}</h2>
+                <ion-badge color="primary" *ngIf="item.notificacion > 0 " item-right>{{item.notificacion}}</ion-badge>
+                <p>{{item.descripcion}}</p>
+            </ion-item>
+        </a>
+    </ion-list>
+</ion-content>
+<ion-footer no-border>
+    <ion-toolbar *ngIf="DatosUsuario.admin == 1">
+        <ion-buttons end>
+            <button ion-button large icon-right color="primary" (click)="navConfigurador()"><ion-icon name="ios-settings-outline"></ion-icon></button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-footer>

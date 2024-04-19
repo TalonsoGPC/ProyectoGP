@@ -1,0 +1,23 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+            Temas
+        </ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="irBoss()"><ion-icon name="ios-menu"></ion-icon></button>
+            <button ion-button clear icon-only item-left (click)="nuevoTema()"><ion-icon name="ios-create-outline"></ion-icon></button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <ion-list *ngFor="let tema of listaTemas">
+        <ion-item text-wrap>
+            <ion-thumbnail item-left icon-rigth (click)="verTema(tema)">
+                <img src="assets/co/{{tema.imagen}}">
+            </ion-thumbnail>
+            <ion-label (click)="verTema(tema)">{{tema.nombre}}</ion-label>
+            <ion-toggle *ngIf="tema.ocultar==1" value="tema.ocultar" checked="true" color="primary" (ionChange)="habilitarTema($event, tema)"></ion-toggle>
+            <ion-toggle *ngIf="tema.ocultar==0" value="tema.ocultar" checked="false" color="primary" (ionChange)="habilitarTema($event, tema)"></ion-toggle>
+        </ion-item>
+    </ion-list>
+</ion-content>

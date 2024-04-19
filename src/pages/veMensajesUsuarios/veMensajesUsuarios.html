@@ -1,0 +1,451 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+            {{tituloMensajesUsuario}}
+        </ion-title>
+        <ion-buttons end>
+                <button  *ngIf="DatosUsuario.boss == 1" ion-button large icon-right color="primary" (click)="irNotificaciones()"><ion-icon name="ios-home"></ion-icon></button>
+            <button ion-button large icon-right color="primary" (click)="menuBoss()"><ion-icon name="ios-menu"></ion-icon></button>
+        </ion-buttons>
+    </ion-navbar>
+    <ion-title [ngStyle]="{'background-color': tema.color}">
+        <ion-grid>
+            <ion-row>
+                <ion-col col-3>
+                    <button *ngIf="tema.id != 11 && temaSecundario != 11" ion-button block clear [disabled]="form.invalid || gp" (click)="actualizarMensajes()" color="textoEdicion">{{textoBotonGuardar}}</button>
+                </ion-col>
+                <ion-col col-6 class="tituloTool">
+                    <h5 ion-text color="light">{{titulo}}</h5>
+                </ion-col>
+                <ion-col col-3 class="botonTop">
+                    <button *ngIf="(tema.id == 1 || tema.id == 13 || tema.id == 14) && temaSecundario != 11" ion-button block clear [disabled]="form.invalid || gp" (click)="borrarMensaje()" color="textoEdicion">{{textoBotonBorrar}}</button>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-title>
+</ion-header>
+<ion-content>
+    <ion-list>
+        <form [formGroup]="form" novalidate>
+            <ion-grid>
+                <ion-row *ngIf="temaParametro == 0">
+                    <ion-item class="form-group">
+                        <ion-label floating [ngStyle]="{'color': colorLabel}">Tema</ion-label>
+                        <ion-select formControlName="tema" okText="Aceptar" cancelText="Cancelar">
+                            <ion-option *ngFor="let tm of listaTemas" [value]="tm.id">{{tm.descripcion}}</ion-option>
+                        </ion-select>
+                    </ion-item>
+                    <ion-item *ngIf="form.get('tema').errors && form.get('tema').touched">
+                        <p *ngIf="form.get('tema').hasError('required')" ion-text color="danger">Es requerido</p>
+                    </ion-item>
+                </ion-row>
+                <ion-row *ngIf="tema.campo_proyecto > 0">
+                    <ion-item class="form-group">
+                        <ion-label floating [ngStyle]="{'color': colorLabel}">Proyecto</ion-label>
+                        <ion-select [disabled]="soloLectura(tema.campo_proyecto)" formControlName="proyecto" okText="Aceptar" cancelText="Cancelar" (ionChange)="obtenerListaPropiedades($event)">
+                            <ion-option *ngFor="let proy of listaProyectos" [value]="proy.numproy">{{proy.nombre}}</ion-option>
+                        </ion-select>
+                    </ion-item>
+                    <ion-item *ngIf="form.get('proyecto').errors && form.get('proyecto').touched">
+                        <p *ngIf="form.get('proyecto').hasError('required')" ion-text color="danger">Es requerido</p>
+                    </ion-item>
+                </ion-row>
+                <!--ion-row *ngIf="tema.campo_notransaccion==1">
+                    <ion-item>
+                        <ion-label floating [ngStyle]="{'color': colorLabel}">Evento</ion-label>
+                        <ion-input type="number" formControlName="no_transaccion"></ion-input>
+                    </ion-item>
+                    <ion-item *ngIf="form.get('no_transaccion').errors && form.get('no_transaccion').touched">
+                        <p *ngIf="form.get('no_transaccion').hasError('required')" ion-text color="danger">Es requerido</p>
+                    </ion-item>
+                </ion-row-->
+                <ion-row *ngIf="tema.campo_modelo_propiedad > 0 && (tema.id == 1 || tema.id == 14 || tema.id == 13) ">
+                    <ion-item>
+                        <ion-label floating [ngStyle]="{'color': colorLabel}">Id. Propiedad</ion-label>
+                        <ion-input [readonly]="soloLectura(tema.campo_modelo_propiedad)" type="text" formControlName="modelo_propiedad" (change)="validarExistenciaPropiedad()"></ion-input>
+                    </ion-item>
+                    <ion-item *ngIf="form.get('modelo_propiedad').errors && form.get('modelo_propiedad').touched">
+                        <p *ngIf="form.get('modelo_propiedad').hasError('required')" ion-text color="danger">Requerido</p>
+                    </ion-item>
+                    <div *ngIf="mssError!=''">
+                        <ion-item>
+                            <p [ngStyle]="{'color': 'red'}">{{mssError}}</p>
+                        </ion-item>
+                    </div>
+                </ion-row>
+                <ion-row *ngIf="tema.campo_modelo_propiedad > 0  && (tema.id != 1 && tema.id != 14 && tema.id != 13) ">
+                    <ion-item>
+                        <ion-label floating [ngStyle]="{'color': colorLabel}">Id. Propiedad</ion-label>
+                        <ion-select [disabled]="soloLectura(tema.campo_modelo_propiedad)" formControlName="modelo_propiedad" okText="Aceptar" cancelText="Cancelar" (ionChange)="obtenerDatosExistentes($event)">
+                            <ion-option *ngFor="let tp of listaPropiedadesProyecto" [value]="tp.modelo_propiedad"> {{tp.modelo_propiedad}} </ion-option>
+                        </ion-select>
+                    </ion-item>
+                    <ion-item *ngIf="form.get('modelo_propiedad').errors && form.get('modelo_propiedad').touched">
+                        <p *ngIf="form.get('modelo_propiedad').hasError('required')" ion-text color="danger"></p>
+                    </ion-item>
+                    <ion-item *ngIf="mssError!=''">
+                        <p [ngStyle]="{'color': 'red'}">{{mssError}}</p>
+                    </ion-item>
+                </ion-row>
+                <ion-row *ngIf="tema.campo_tipo_propiedad > 0 || temaSecundario == 11">
+                    <ion-item *ngIf="(form.controls.tipo_propiedad.value != null && !mostrarCamposVacios) || mostrarCamposVacios">
+                        <ion-label floating [ngStyle]="{'color': colorLabel}">Tipo propiedad</ion-label>
+                        <ion-select [disabled]="soloLectura(tema.campo_tipo_propiedad)" formControlName="tipo_propiedad" okText="Aceptar" cancelText="Cancelar">
+                            <ion-option *ngFor="let tp of listaTipoPropiedad" [value]="tp.id">{{tp.descripcion}}</ion-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-row>
+                <ion-row *ngIf="tema.campo_propiedad > 0 || temaSecundario == 11 ">
+                    <ion-item *ngIf="(form.controls.propiedad.value != null && !mostrarCamposVacios) || mostrarCamposVacios">
+                        <ion-label floating [ngStyle]="{'color': colorLabel}">Modelo</ion-label>
+                        <ion-select [disabled]="soloLectura(tema.campo_propiedad)" formControlName="propiedad" okText="Aceptar" cancelText="Cancelar">
+                            <ion-option *ngFor="let pd of listaPropiedades" [value]="pd.id">{{pd.descripcion}}</ion-option>
+                        </ion-select>
+                        <ion-item *ngIf="form.get('propiedad').errors && form.get('propiedad').touched">
+                            <p *ngIf="form.get('propiedad').hasError('required')" ion-text color="danger">Es requerido</p>
+                        </ion-item>
+                    </ion-item>
+                </ion-row>
+                <ion-row *ngIf="tema.campo_ubicacion_propiedad > 0 || temaSecundario == 11">
+                    <ion-item *ngIf="(form.controls.ubicacion_propiedad.value != null && !mostrarCamposVacios) || mostrarCamposVacios">
+                        <ion-label floating [ngStyle]="{'color': colorLabel}">Ubicación</ion-label>
+                        <ion-textarea [readonly]="soloLectura(tema.campo_ubicacion_propiedad)" text-left formControlName="ubicacion_propiedad"></ion-textarea>
+                    </ion-item>
+                </ion-row>
+                <ion-row *ngIf="tema.campo_especificacion_propiedad > 0 || temaSecundario == 11">
+                    <ion-item *ngIf="(form.controls.especificaciones_propiedad.value != null && !mostrarCamposVacios) || mostrarCamposVacios">
+                        <ion-label floating [ngStyle]="{'color': colorLabel}">Descripción</ion-label>
+                        <ion-textarea [readonly]="soloLectura(tema.campo_especificacion_propiedad)" text-left formControlName="especificaciones_propiedad"></ion-textarea>
+                    </ion-item>
+                </ion-row>
+                <ion-row *ngIf="tema.campo_precio > 0 || temaSecundario == 11">
+                    <ion-item *ngIf="(form.controls.precio.value != null && !mostrarCamposVacios) || mostrarCamposVacios">
+                        <ion-label floating [ngStyle]="{'color': colorLabel}">Precio</ion-label>
+                        <ion-input [readonly]="soloLectura(tema.campo_precio)" type="number" formControlName="precio"></ion-input>
+                    </ion-item>
+                </ion-row>
+                <ion-row *ngIf="tema.campo_vendedor > 0 || temaSecundario == 11">
+                    <ion-item *ngIf="(form.controls.vendedor.value != null && !mostrarCamposVacios) || mostrarCamposVacios">
+                        <ion-label floating [ngStyle]="{'color': colorLabel}">Vendedor</ion-label>
+                        <ion-select [disabled]="soloLectura(tema.campo_vendedor)" formControlName="vendedor" okText="Aceptar" cancelText="Cancelar">
+                            <ion-option *ngFor="let vd of listaVendedores" [value]="vd.id">{{vd.nombre}}</ion-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-row>
+                <!--ion-row *ngIf="tema.campo_cliente==1">
+                    <ion-item>
+                        <ion-label floating [ngStyle]="{'color': colorLabel}">Cliente</ion-label>
+                        <ion-select formControlName="cliente" okText="Aceptar" cancelText="Cancelar">
+                            <ion-option *ngFor="let cl of listaClientes" [value]="cl.id">{{cl.nombre}}</ion-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-row-->
+                <ion-row *ngIf="tema.campo_cliente > 0 || temaSecundario == 11">
+                    <ion-item *ngIf="(form.controls.cliente.value != null && !mostrarCamposVacios) || mostrarCamposVacios">
+                        <ion-label floating [ngStyle]="{'color': colorLabel}">Cliente</ion-label>
+                        <ion-input [readonly]="soloLectura(tema.campo_cliente)" type="text" formControlName="cliente"></ion-input>
+                    </ion-item>
+                </ion-row>
+                <ion-row *ngIf="tema.campo_telefono > 0 || temaSecundario == 11">
+                    <ion-item *ngIf="(form.controls.telefono.value != null && !mostrarCamposVacios) || mostrarCamposVacios">
+                        <ion-label floating [ngStyle]="{'color': colorLabel}">Telefono</ion-label>
+                        <ion-input [readonly]="soloLectura(tema.campo_telefono)" type="text" formControlName="telefono"></ion-input>
+                    </ion-item>
+                </ion-row>
+                <ion-row *ngIf="tema.campo_email > 0 || temaSecundario == 11">
+                    <ion-item *ngIf="(form.controls.email.value != null && !mostrarCamposVacios) || mostrarCamposVacios">
+                        <ion-label floating [ngStyle]="{'color': colorLabel}">Email</ion-label>
+                        <ion-input [readonly]="soloLectura(tema.campo_email)" type="text" formControlName="email"></ion-input>
+                    </ion-item>
+                </ion-row>
+                <ion-row *ngIf="tema.campo_noine > 0 || temaSecundario == 11">
+                    <ion-item *ngIf="(form.controls.no_ine.value != null && !mostrarCamposVacios) || mostrarCamposVacios">
+                        <ion-label floating [ngStyle]="{'color': colorLabel}">No. Ine</ion-label>
+                        <ion-input [readonly]="soloLectura(tema.campo_noine)" type="text" formControlName="no_ine"></ion-input>
+                    </ion-item>
+                </ion-row>
+                <ion-row *ngIf="tema.campo_noimss > 0 || temaSecundario == 11">
+                    <ion-item *ngIf="(form.controls.no_imss.value != null && !mostrarCamposVacios) || mostrarCamposVacios">
+                        <ion-label floating [ngStyle]="{'color': colorLabel}">No. Imss</ion-label>
+                        <ion-input [readonly]="soloLectura(tema.campo_noimss)" type="text" formControlName="no_imss"></ion-input>
+                    </ion-item>
+                </ion-row>
+                <ion-row *ngIf="tema.campo_noinfonavit > 0 || temaSecundario == 11">
+                    <ion-item *ngIf="(form.controls.no_infonavit.value != null && !mostrarCamposVacios) || mostrarCamposVacios">
+                        <ion-label floating [ngStyle]="{'color': colorLabel}">No. Infonavit</ion-label>
+                        <ion-input [readonly]="soloLectura(tema.campo_noinfonavit)" type="text" formControlName="no_infonavit"></ion-input>
+                    </ion-item>
+                </ion-row>
+                <ion-row *ngIf="tema.campo_nofoviste > 0 || temaSecundario == 11">
+                    <ion-item *ngIf="(form.controls.no_foviste.value != null && !mostrarCamposVacios) || mostrarCamposVacios">
+                        <ion-label floating [ngStyle]="{'color': colorLabel}">No. Foviste</ion-label>
+                        <ion-input [readonly]="soloLectura(tema.campo_nofoviste)" type="text" formControlName="no_foviste"></ion-input>
+                    </ion-item>
+                </ion-row>
+                <ion-row *ngIf="tema.campo_meses_contrato > 0 || temaSecundario == 11">
+                    <ion-item *ngIf="(form.controls.meses_contrato.value != null && !mostrarCamposVacios) || mostrarCamposVacios">
+                        <ion-label floating [ngStyle]="{'color': colorLabel}">Meses Contrato</ion-label>
+                        <ion-input [readonly]="soloLectura(tema.campo_meses_contrato)" type="number" formControlName="meses_contrato"></ion-input>
+                    </ion-item>
+                </ion-row>
+                <ion-row *ngIf="tema.campo_monto_anticipo > 0 || temaSecundario == 11">
+                    <ion-item *ngIf="(form.controls.monto_anticipo.value != null && !mostrarCamposVacios) || mostrarCamposVacios">
+                        <ion-label floating [ngStyle]="{'color': colorLabel}">Monto del anticipo</ion-label>
+                        <ion-input [readonly]="soloLectura(tema.campo_monto_anticipo)" type="number" formControlName="monto_anticipo"></ion-input>
+                    </ion-item>
+                </ion-row>
+                <ion-row *ngIf="tema.campo_dias_pago > 0 || temaSecundario == 11">
+                    <ion-item *ngIf="(form.controls.dias_pago.value != null && !mostrarCamposVacios) || mostrarCamposVacios">
+                        <ion-label floating [ngStyle]="{'color': colorLabel}">Día del mes a pagar</ion-label>
+                        <ion-input [readonly]="soloLectura(tema.campo_dias_pago)" type="number" formControlName="dias_pago"></ion-input>
+                    </ion-item>
+                </ion-row>
+                <ion-row *ngIf="tema.campo_no_pago > 0 || temaSecundario == 11">
+                    <ion-item *ngIf="(form.controls.no_pago.value != null && !mostrarCamposVacios) || mostrarCamposVacios">
+                        <ion-label floating [ngStyle]="{'color': colorLabel}">No. Pago</ion-label>
+                        <ion-input [readonly]="soloLectura(tema.campo_no_pago)" type="number" formControlName="no_pago"></ion-input>
+                    </ion-item>
+                </ion-row>
+                <ion-row *ngIf="tema.campo_tipo_operacion > 0 || temaSecundario == 11">
+                    <ion-item *ngIf="(form.controls.tipo_operacion.value != null && !mostrarCamposVacios) || mostrarCamposVacios">
+                        <ion-label floating [ngStyle]="{'color': colorLabel}">Tipo operación</ion-label>
+                        <ion-select [disabled]="soloLectura(tema.campo_tipo_operacion)" formControlName="tipo_operacion" okText="Aceptar" cancelText="Cancelar">
+                            <ion-option *ngFor="let to of listaTipoOperacion" [value]="to.id">{{to.descripcion}}</ion-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-row>
+                <ion-row *ngIf="tema.campo_forma_pago > 0 || temaSecundario == 11">
+                    <ion-item *ngIf="(form.controls.forma_pago.value != null && !mostrarCamposVacios) || mostrarCamposVacios">
+                        <ion-label floating [ngStyle]="{'color': colorLabel}">Forma de pago</ion-label>
+                        <ion-select [disabled]="soloLectura(tema.campo_forma_pago)" formControlName="forma_pago" okText="Aceptar" cancelText="Cancelar" (ionChange)="obtenerFormaDePago($event)">
+                            <ion-option *ngFor="let fp of listaFormasPago" [value]="fp.id">{{fp.descripcion}}</ion-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-row>
+                <ion-row *ngIf="(tema.campo_tipo_credito > 0 && formaPago!=1) || temaSecundario == 11">
+                    <ion-item *ngIf="(form.controls.tipo_credito.value != null && !mostrarCamposVacios) || mostrarCamposVacios">
+                        <ion-label floating [ngStyle]="{'color': colorLabel}">Tipo crédito</ion-label>
+                        <ion-select [disabled]="soloLectura(tema.campo_tipo_credito)" formControlName="tipo_credito" okText="Aceptar" cancelText="Cancelar">
+                            <ion-option *ngFor="let tc of listaTiposCredito" [value]="tc.id">{{tc.descripcion}}</ion-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-row>
+                <ion-row *ngIf="(tema.campo_institucion_credito > 0 && formaPago!=1) || temaSecundario == 11">
+                    <ion-item *ngIf="(form.controls.institucion_credito.value != null && !mostrarCamposVacios) || mostrarCamposVacios">
+                        <ion-label floating [ngStyle]="{'color': colorLabel}">Institución de crédito</ion-label>
+                        <ion-input [readonly]="soloLectura(tema.campo_institucion_credito)" type="text" formControlName="institucion_credito"></ion-input>
+                    </ion-item>
+                </ion-row>
+                <ion-row *ngIf="tema.campo_notario > 0 || temaSecundario == 11">
+                    <ion-item *ngIf="(form.controls.notario.value != null && !mostrarCamposVacios) || mostrarCamposVacios">
+                        <ion-label floating [ngStyle]="{'color': colorLabel}">Notario</ion-label>
+                        <ion-input [readonly]="soloLectura(tema.campo_notario)" type="text" formControlName="notario"></ion-input>
+                    </ion-item>
+                </ion-row>
+                <ion-row *ngIf="tema.campo_avance_construccion > 0 || temaSecundario == 11">
+                    <ion-item *ngIf="(form.controls.avance_construccion.value != null && !mostrarCamposVacios) || mostrarCamposVacios">
+                        <ion-label floating [ngStyle]="{'color': colorLabel}">Avance construcción</ion-label>
+                        <ion-input [readonly]="soloLectura(tema.campo_avance_construccion)" type="number" formControlName="avance_construccion"></ion-input>
+                    </ion-item>
+                </ion-row>
+                <ion-row *ngIf="tema.campo_monto_cobrado > 0 || temaSecundario == 11">
+                    <ion-item *ngIf="(form.controls.monto_cobrado.value != null && !mostrarCamposVacios) || mostrarCamposVacios">
+                        <ion-label floating [ngStyle]="{'color': colorLabel}">Monto cobrado</ion-label>
+                        <ion-input [readonly]="soloLectura(tema.campo_monto_cobrado)" type="number" formControlName="monto_cobrado"></ion-input>
+                    </ion-item>
+                </ion-row>
+                <ion-row *ngIf="tema.campo_fecha_entrega > 0 || temaSecundario == 11">
+                    <ion-item *ngIf="(form.controls.fecha_entrega.value != null && !mostrarCamposVacios) || mostrarCamposVacios">
+                        <ion-label floating [ngStyle]="{'color': colorLabel}">Fecha de entrega</ion-label>
+                        <ion-datetime text-left displayFormat="DD/MM/YYYY" formControlName="fecha_entrega"></ion-datetime>
+                    </ion-item>
+                </ion-row>
+                <ion-row *ngIf="tema.campo_meses_garantia > 0 || temaSecundario == 11">
+                    <ion-item *ngIf="(form.controls.monto_cobrado.value != null && !mostrarCamposVacios) || mostrarCamposVacios">
+                        <ion-label floating [ngStyle]="{'color': colorLabel}">Meses garantía</ion-label>
+                        <ion-input [readonly]="soloLectura(tema.campo_meses_garantia)" type="number" formControlName="monto_cobrado"></ion-input>
+                    </ion-item>
+                </ion-row>
+                <ion-row *ngIf="tema.campo_costo_mtto > 0 || temaSecundario == 11">
+                    <ion-item *ngIf="(form.controls.costo_mtto.value != null && !mostrarCamposVacios) || mostrarCamposVacios">
+                        <ion-label floating [ngStyle]="{'color': colorLabel}">Costo mantenimiento</ion-label>
+                        <ion-input [readonly]="soloLectura(tema.campo_costo_mtto)" type="number" formControlName="costo_mtto"></ion-input>
+                    </ion-item>
+                </ion-row>
+                <ion-row *ngIf="tema.campo_nota > 0 || temaSecundario == 11">
+                    <ion-item *ngIf="(form.controls.nota.value != null && !mostrarCamposVacios) || mostrarCamposVacios">
+                        <ion-label floating [ngStyle]="{'color': colorLabel}">Nota</ion-label>
+                        <ion-textarea [readonly]="soloLectura(tema.campo_nota)" text-left formControlName="nota"></ion-textarea>
+                    </ion-item>
+                </ion-row>
+                <!--ion-row *ngIf="tema.campo_aut_por > 0 ">
+                    <ion-item *ngIf="(form.controls.autorizado_por.value != null && !mostrarCamposVacios) || mostrarCamposVacios">
+                        <ion-label floating [ngStyle]="{'color': colorLabel}">Autorizado</ion-label>
+                        <ion-select [disabled]="soloLectura(tema.campo_aut_por)" formControlName="autorizado_por" okText="Aceptar" cancelText="Cancelar">
+                            <ion-option *ngFor="let usr of listaUsuarios" [value]="usr.id">{{usr.nombre}}</ion-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-row-->
+                <!--ion-row *ngIf="tema.campo_estatus_ventas==1">
+                    <ion-item>
+                        <ion-label floating [ngStyle]="{'color': colorLabel}">Estatus Ventas</ion-label>
+                        <ion-select formControlName="estatus_ventas" okText="Aceptar" cancelText="Cancelar">
+                            <ion-option *ngFor="let etv of listaEstatusVentas" [value]="etv.id">{{etv.descripcion}}</ion-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-row-->
+                <ion-row>
+                    <ion-col *ngIf="tema.campo_fecha_registro > 0 || temaSecundario == 11">
+                        <ion-item *ngIf="(form.controls.fecha_registro.value != null && !mostrarCamposVacios) || mostrarCamposVacios">
+                            <ion-label floating [ngStyle]="{'color': colorLabel}">Fecha registro</ion-label>
+                            <ion-datetime text-left displayFormat="DD/MM/YYYY" formControlName="fecha_registro"></ion-datetime>
+                        </ion-item>
+                    </ion-col>
+                    <!--ion-col *ngIf="tema.campo_semana > 0 || temaSecundario == 11">
+                        <ion-item *ngIf="(form.controls.semana.value != null && !mostrarCamposVacios) || mostrarCamposVacios">
+                            <ion-label floating [ngStyle]="{'color': colorLabel}">Semana</ion-label>
+                            <ion-input [readonly]="soloLectura(tema.campo_semana)" type="number" formControlName="semana"></ion-input>
+                        </ion-item>
+                    </ion-col-->
+                </ion-row>
+                <!--ion-row *ngIf="tema.campo_estatus_expediente > 0 ">
+                    <ion-item *ngIf="(form.controls.estatus.value != null && !mostrarCamposVacios) || mostrarCamposVacios">
+                        <ion-label floating [ngStyle]="{'color': colorLabel}">Estatus</ion-label>
+                        <ion-select [disabled]="soloLectura(tema.campo_estatus_expediente)" formControlName="estatus" okText="Aceptar" cancelText="Cancelar">
+                            <ion-option *ngFor="let et of listaEstatus" [value]="et.id">{{et.descripcion}}</ion-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-row-->
+            </ion-grid>
+        </form>
+    </ion-list>
+    <ion-list no-lines *ngFor="let archivo of tempImageList">
+        <div *ngIf="archivo.formato == 'jpg'" class="imagenes">
+            <img src="{{archivo.ruta}}" alt="">
+            <div class="descripcionImagen">
+                <ion-row>
+                    <ion-col>
+                        {{archivo.nombre}}
+                    </ion-col>
+                </ion-row>
+            </div>
+        </div>
+    </ion-list>
+    <ion-list no-lines *ngFor="let archivo of listaArchivosMensajes">
+        <div *ngIf="archivo.formato == 'jpg'" class="imagenes">
+            <img [src]="returnPathFile('http://142.4.197.18:8000/', archivo.nombre)" alt="" (click)="imageFullSize('http://142.4.197.18:8000/', archivo)">
+            <div class="descripcionImagen">
+                <ion-row>
+                    <ion-col>
+                        {{archivo.nombre}}
+                    </ion-col>
+                    <ion-col>
+                        <ion-buttons end>
+                            <!--button ion-button icon-only clear ><ion-icon name="ios-image-outline"></ion-icon></button-->
+                            <button ion-button icon-only clear (click)="borrarArchivo(archivo)"><ion-icon name="ios-trash-outline"></ion-icon></button>
+                        </ion-buttons>
+                    </ion-col>
+                </ion-row>
+            </div>
+        </div>
+    </ion-list>
+    <ion-list *ngFor="let archivo of listaArchivosMensajes" no-lines>
+        <div *ngIf="archivo.formato != 'jpg' && archivo.formato != 'mp4' && archivo.formato != '3gp'">
+            <ion-item class="archivos" (click)="accionArchivos(archivo)">
+                <ion-thumbnail item-left>
+                    <img *ngIf="archivo.formato == 'xlsx' || archivo.formato == 'xls'" src="assets/img/excelIcono.png">
+                    <img *ngIf="archivo.formato == 'pdf'" src="assets/img/pdfIcono.png">
+                    <img *ngIf="archivo.formato == 'docx' || archivo.formato == 'doc'" src="assets/img/wordIcono.png">
+                    <img *ngIf="archivo.formato == 'dwg'" src="assets/img/autocadIcono.png">
+                </ion-thumbnail>
+                {{archivo.nombre}}
+            </ion-item>
+        </div>
+    </ion-list>
+    <ion-list *ngFor="let archivo of listaArchivosMensajes" no-lines>
+        <div *ngIf="archivo.formato == 'mp4'" class="archivoVideo">
+            <video width="100%" controls>
+                <source [src]="returnPathFile('http://142.4.197.18:8000/', archivo.nombre)" type="video/mp4">
+            </video>
+            <div class="descripcionImagen">
+                <ion-row>
+                    <ion-col>
+                        {{archivo.nombre}}
+                    </ion-col>
+                    <ion-col>
+                        <ion-buttons end>
+                            <button ion-button icon-only clear (click)="borrarArchivo(archivo)"><ion-icon name="ios-trash-outline"></ion-icon></button>
+                        </ion-buttons>
+                    </ion-col>
+                </ion-row>
+            </div>
+        </div>
+    </ion-list>
+    <ion-list *ngFor="let archivo of tempVideoList" no-lines>
+        <div *ngIf="archivo.formato == 'mp4'" class="archivoVideo">
+            <video width="100%" controls>
+                <source [src]="returnPathFile('http://142.4.197.18:8000/', archivo.nombre)" type="video/mp4">
+            </video>
+            <div class="descripcionImagen">
+                <ion-row>
+                    <ion-col>
+                        {{archivo.nombre}}
+                    </ion-col>
+                </ion-row>
+            </div>
+        </div>
+    </ion-list>
+    <ion-list *ngFor="let archivo of listaArchivosMensajes" no-lines>
+        <div *ngIf="archivo.formato == '3gp'" class="archivoVideo">
+            <audio controls>
+                    <source [src]="returnPathFile('http://142.4.197.18:8000/', archivo.nombre)" type="audio/mp3">
+            </audio>
+            <div class="descripcionImagen">
+                <ion-row>
+                    <ion-col>
+                        {{archivo.nombre}}
+                    </ion-col>
+                    <ion-col>
+                        <ion-buttons end>
+                            <button ion-button icon-only clear (click)="borrarArchivo(archivo)"><ion-icon name="ios-trash-outline"></ion-icon></button>
+                        </ion-buttons>
+                    </ion-col>
+                </ion-row>
+            </div>
+        </div>
+    </ion-list>
+    <ion-list *ngFor="let archivo of tempAudioList" no-lines>
+        <div *ngIf="archivo.formato == '3gp'" class="archivoVideo">
+            <audio controls>
+                    <source src="{{archivo.ruta}}" type="audio/3gp">
+            </audio>
+            <div class="descripcionImagen">
+                <ion-row>
+                    <ion-col>
+                        {{archivo.nombre}}
+                    </ion-col>
+                </ion-row>
+            </div>
+        </div>
+    </ion-list>
+</ion-content>
+<ion-footer>
+    <ion-toolbar>
+        <ion-buttons *ngIf = "DatosUsuario.so == 'ios'" class="bottomMarginToolIos" end>
+                <button ion-button icon-only icon-left color="primary"  (click)="subirArchivo()" icon-right color="primary"><ion-icon name="ios-folder-outline"></ion-icon></button>
+            <button ion-button icon-only icon-left color="primary" (click)="subirVideos()"><ion-icon name="ios-videocam-outline"></ion-icon></button>
+            <button ion-button icon-only icon-left color="primary"  (click)="subirAudio()" icon-right color="primary"><ion-icon name="ios-mic-outline"></ion-icon></button>
+            <button ion-button icon-only icon-left color="primary" (click)="presentActionSheetCamara()"><ion-icon name="ios-camera-outline"></ion-icon></button>
+            <!--button ion-button icon-only icon-right color="primary"><ion-icon name="ios-attach-outline"></ion-icon></button-->
+            <button ion-button icon-only icon-left color="primary" (click)="generarNuevo()"><ion-icon name="ios-create-outline"></ion-icon></button>
+        </ion-buttons>
+        <ion-buttons *ngIf = "DatosUsuario.so == 'android'" class="bottomMarginToolAndroid" end>
+                <button ion-button icon-only icon-left color="primary"  (click)="subirArchivo()" icon-right color="primary"><ion-icon name="ios-folder-outline"></ion-icon></button>
+            <button ion-button icon-only icon-left color="primary" (click)="subirVideos()"><ion-icon name="ios-videocam-outline"></ion-icon></button>
+            <button ion-button icon-only icon-left color="primary"  (click)="subirAudio()" icon-right color="primary"><ion-icon name="ios-mic-outline"></ion-icon></button>
+            <button ion-button icon-only icon-left color="primary" (click)="presentActionSheetCamara()"><ion-icon name="ios-camera-outline"></ion-icon></button>
+            <!--button ion-button icon-only icon-right color="primary"><ion-icon name="ios-attach-outline"></ion-icon></button-->
+            <button ion-button icon-only icon-left color="primary" (click)="generarNuevo()"><ion-icon name="ios-create-outline"></ion-icon></button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-footer>

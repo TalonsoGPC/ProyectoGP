@@ -1,0 +1,43 @@
+<ion-header>
+</ion-header>
+<ion-content>
+    <div class="titulos">
+        <ion-grid>
+            <ion-row>
+                <ion-title>
+                    <h2 [ngStyle]="{'color': 'white', 'text-align': 'center'}">Necesito definir <br> tu Perfil</h2>
+                </ion-title>
+            </ion-row>
+        </ion-grid>
+        <ion-grid>
+            <ion-row>
+                <h2 [ngStyle]="{'color': 'white', 'text-align': 'center'}">
+                    ¿Eres parte de una Empresa o para uso Individual?
+                </h2>
+            </ion-row>
+        </ion-grid>
+    </div>
+    <form (submit)="cambiarPerfil($event)" [formGroup]="perfilForm" class="perfil">
+        <ion-list radio-group formControlName="perfil">
+            <ion-item>
+                <ion-label ion-text color="textoColor2">Cliente GP Construct</ion-label>
+                <ion-radio value="cliente"></ion-radio>
+            </ion-item>
+            <ion-item>
+                <ion-label ion-text color="textoColor2">Empresa</ion-label>
+                <ion-radio value="empresa"></ion-radio>
+            </ion-item>
+            <ion-item>
+                <ion-label ion-text color="textoColor2">Individual</ion-label>
+                <ion-radio value="individual"></ion-radio>
+            </ion-item>
+        </ion-list>
+    </form>
+</ion-content>
+<ion-footer>
+    <ion-navbar transparent color="primary">
+        <ion-buttons end>
+            <button ion-button clear color="light" (click)="RegistroActividadPage()">Continuar<ion-icon icon-only style="font-size: 33px;" name="ios-arrow-forward"></ion-icon></button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-footer>

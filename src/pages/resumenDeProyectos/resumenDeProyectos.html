@@ -1,0 +1,48 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+            Resumen de Proyectos
+        </ion-title>
+    </ion-navbar>
+    <ion-toolbar color="dark">
+        <p [ngStyle]="{'color': '#ffffff', 'overflow':'hidden', 'text-overflow': 'ellipsis', 'font-size': ' 14px'}">{{titulo}}</p>
+        <ion-buttons end class="endButtons">
+            <button ion-button block clear color="carpetaProyecto" *ngIf="tipoReporte!=2"><h6>$ {{totalProyectos | number}}</h6></button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <ion-list *ngFor="let tema of listaResumen" no-lines>
+        <ion-grid *ngIf="tema.tarea==0">
+            <ion-row>
+                <ion-col>
+                    <h5 class="temaNombre" *ngIf="tema.tarea==0" [ngStyle]="{'color': tema.color, 'text-decoration': 'underline'}">{{tema.nombre_tema}}</h5>
+                </ion-col>
+                <ion-col>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+        <ion-grid *ngIf="tema.tarea!=0">
+            <ion-row>
+                <ion-col>
+                    <p *ngIf="tema.tarea!=0">{{tema.descripcion_tarea}}</p>
+                </ion-col>
+                <ion-col [ngStyle]="{ 'text-align' : 'right'}">
+                    <p *ngIf="tema.monto<0" [ngStyle]="{ 'color' : 'red'}">$ {{tema.monto | number}}</p>
+                    <p *ngIf="tema.monto>0">$ {{tema.monto | number}}</p>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-list>
+</ion-content>
+<ion-footer no-border>
+    <ion-toolbar>
+        <ion-buttons start>
+            <button ion-button icon-only color="primary" (click)="getFiltro()"><ion-icon name="md-funnel"></ion-icon></button>
+            <button ion-button icon-only color="primary" (click)="getReport()"><ion-icon name="ios-list-box-outline"></ion-icon></button>
+        </ion-buttons>
+        <ion-title>
+            {{tituloPie}}
+        </ion-title>
+    </ion-toolbar>
+</ion-footer>

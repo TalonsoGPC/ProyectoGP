@@ -1,0 +1,25 @@
+{
+    "android": {
+        "debug": {
+            "keystore": "ProjectGP.keystore",
+            "storePassword": "Gpconstruct1289840",
+            "alias": "ProjectGP",
+            "password": "Gpconstruct1289840",
+            "keystoreType": ""
+        },
+        "release": {
+            "keystore": "ProjectGP.keystore",
+            "storePassword": "Gpconstruct1289840",
+            "alias": "ProjectGP",
+            "password": "Gpconstruct1289840",
+            "keystoreType": ""
+        },
+        "prod": {
+            "keystore": "ProjectGP.keystore",
+            "storePassword": "Gpconstruct1289840",
+            "alias": "ProjectGP",
+            "password": "Gpconstruct1289840",
+            "keystoreType": ""
+        }
+    }
+}

@@ -1,0 +1,26 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+            Reportes
+        </ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content padding>
+    <ion-list *ngFor="let reporte of listaTiposReporte">
+        <a href="#" (click)="irReportesProyectos(reporte)">
+            <ion-item text-wrap>
+                <ion-thumbnail item-left icon-rigth>
+                    <img src="assets/img/{{reporte.imagen}}">
+                </ion-thumbnail>
+                <h2>{{reporte.descripcion}}</h2>
+            </ion-item>
+        </a>
+    </ion-list>
+</ion-content>
+<ion-footer no-border>
+    <ion-toolbar>
+        <ion-buttons start>
+            <button ion-button icon-only color="primary" (click)="getFiltro()"><ion-icon name="md-funnel"></ion-icon></button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-footer>

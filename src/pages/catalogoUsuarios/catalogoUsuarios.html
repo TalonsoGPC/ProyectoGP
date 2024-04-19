@@ -1,0 +1,31 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+            Usuarios
+        </ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="irBoss()"><ion-icon name="ios-menu"></ion-icon></button>
+            <button ion-button clear icon-only item-left (click)="nuevoUsuario()"><ion-icon name="ios-create-outline"></ion-icon></button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <ion-list *ngFor="let usuario of listaUsuarios" no-lines>
+        <ion-item>
+            <ion-label (click)="actualizarUsuario(usuario)">{{usuario.cveusuario}}</ion-label>
+            <ion-icon (click)="borrarUsuario(usuario)" name='ios-trash-outline' item-end color="primary"></ion-icon>
+        </ion-item>
+        <!--ion-row>
+            <ion-col col-9>
+                <a href="#" (click)="actualizarUsuario(usuario)">
+                    <ion-label>{{usuario.cveusuario}}</ion-label>
+                </a>
+            </ion-col>
+            <ion-col col-1>
+                <ion-buttons end>
+                    <button ion-button icon-only clear (click)="borrarUsuario(usuario)"><ion-icon name="ios-trash-outline"></ion-icon></button>
+                </ion-buttons>
+            </ion-col>
+        </ion-row-->
+    </ion-list>
+</ion-content>

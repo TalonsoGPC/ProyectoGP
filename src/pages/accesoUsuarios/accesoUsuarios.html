@@ -1,0 +1,33 @@
+<ion-content padding>
+    <!--a src="#">
+        <div>
+            <img src="assets/fondo/fondoGPAcceso.png">
+        </div>
+    </a-->
+    <div class="formGroup">
+        <form [formGroup]="form">
+            <ion-grid>
+                <ion-row>
+                    <ion-input type="text" formControlName="empresa" placeholder=" Cliente"></ion-input>
+                </ion-row>
+                <ion-row>
+                    <ion-input type="text" formControlName="usuario" placeholder=" Clave Usuario"></ion-input>
+                </ion-row>
+                <ion-row>
+                </ion-row>
+                <ion-row>
+                    <ion-input type="password" formControlName="password" placeholder=" Contraseña"></ion-input>
+                </ion-row>
+                <ion-row>
+                    <button round ion-button block clear color="light" (click)="validarUsuarioExistente()"><p [ngStyle]="{'font-size':'30px'}">Entrar</p></button>
+                </ion-row>
+            </ion-grid>
+        </form>
+    </div>
+    <div class="mss-error">
+        <p [ngStyle]="{'color' : '#f37256', 'font-size': '18px'}">{{mssError}}</p>
+    </div>
+    <div class="registroCuenta">
+        <p [ngStyle]="{'color' : 'white'}">¿No tienes cuenta?<br><a href="#" (click)="registroCuenta()">Regístrate!</a></p>
+    </div>
+</ion-content>

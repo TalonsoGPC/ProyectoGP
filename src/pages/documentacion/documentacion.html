@@ -1,0 +1,23 @@
+<ion-header>
+    <ion-navbar>
+        Documentos
+    </ion-navbar>
+</ion-header>
+
+<ion-content no-lines text-center class="icons-basic-page">
+    <ion-list no-lines>
+        <ion-row>
+            <ion-col *ngFor="let item of listaTiposDocumentos">
+                <div class="documentos">
+                    <a href="#" (click)="verDocumentos(item.formato)">
+                        <ion-item class="archivos" no-lines>
+                            <ion-thumbnail>
+                                <img src="assets/img/{{item.imagen}}">
+                            </ion-thumbnail>
+                        </ion-item>
+                    </a>
+                </div>
+            </ion-col>
+        </ion-row>
+    </ion-list>
+</ion-content>

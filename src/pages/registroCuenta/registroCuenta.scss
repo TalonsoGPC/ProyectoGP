@@ -1,0 +1,25 @@
+registroCuenta-page {
+    ion-content {
+        background-image: url("../assets/fondo/background-registro.png");
+        width: 100%;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        background-position: center center;
+    }
+    .registro-cuenta ion-row {
+        margin-bottom: 3px !important;
+        margin-left: 10% !important;
+        width: 80% !important;
+    }
+    .titulos {
+        margin-top: 25% !important;
+    }
+    ion-input {
+        border: 1px solid lightgrey;
+        border-radius: 10px !important;
+        background-color: white !important;
+    }
+    .registro-cuenta {
+        margin-top: 1% !important;
+    }
+}

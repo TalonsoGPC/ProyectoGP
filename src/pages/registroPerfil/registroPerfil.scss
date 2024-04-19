@@ -1,0 +1,21 @@
+registroPerfil-page {
+    ion-content {
+        background-image: url("../assets/fondo/background-registro.png");
+        width: 100%;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        background-position: center center;
+    }
+    .titulos {
+        margin-top: 40% !important;
+    }
+    .perfil {
+        margin-top: 15% !important;
+    }
+    .perfil ion-item {
+        border-radius: 10px !important;
+        margin-left: 10% !important;
+        width: 80% !important;
+        margin-bottom: 5px !important;
+    }
+}

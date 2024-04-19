@@ -1,0 +1,15 @@
+catalogoTipoEmpresa-page {
+    a {
+        text-decoration: none;
+    }
+    ion-item {
+        margin-bottom: -20px !important;
+    }
+    ion-thumbnail img {
+        margin-left: -10px !important;
+    }
+    ion-item:hover {
+        background-color: #A9D0F5;
+        color: white !important;
+    }
+}

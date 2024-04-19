@@ -1,0 +1,32 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+            Tareas
+        </ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="irBoss()"><ion-icon name="ios-menu"></ion-icon></button>
+            <button ion-button clear icon-only item-left (click)="nuevaTarea()"><ion-icon name="ios-create-outline"></ion-icon></button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <ion-list *ngFor="let tarea of listaTareas">
+        <ion-item text-wrap *ngIf="ofOcultarTarea(tarea.tema)">
+            <ion-thumbnail item-left icon-rigth>
+                <div *ngFor="let tema of listaTemas">
+                    <img *ngIf=" tema.id == tarea.tema && tema.ocultar == 1" src="assets/co/{{tema.imagen}}">
+                </div>
+            </ion-thumbnail>
+            <ion-label (click)="verTarea(tarea)">{{ tarea.descripcion}}</ion-label>
+            <ion-toggle *ngIf="tarea.ocultar==1" value="tarea.ocultar" checked="true" color="primary" (ionChange)="habilitarTarea($event, tarea)"></ion-toggle>
+            <ion-toggle *ngIf="tarea.ocultar==0" value="tarea.ocultar" checked="false" color="primary" (ionChange)="habilitarTarea($event, tarea)"></ion-toggle>
+        </ion-item>
+    </ion-list>
+</ion-content>
+<ion-footer no-border>
+    <ion-toolbar>
+        <ion-buttons start>
+            <button ion-button icon-only color="primary" (click)="getFiltro()"><ion-icon name="md-funnel"></ion-icon></button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-footer>

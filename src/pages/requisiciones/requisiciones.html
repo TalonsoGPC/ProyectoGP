@@ -1,0 +1,312 @@
+<ion-header no-border>
+    <ion-navbar>
+        <ion-title *ngIf="estatus==2">
+            Autorizaciones
+        </ion-title>
+        <ion-buttons end *ngIf="estatus==2">
+            <button  *ngIf="DatosUsuario.boss == 1" ion-button large icon-right color="primary" (click)="irNotificaciones()"><ion-icon name="ios-home"></ion-icon></button>
+            <button ion-button large icon-right color="primary" (click)="menuBoss()"><ion-icon name="ios-menu"></ion-icon></button>
+        </ion-buttons>
+        <ion-toolbar *ngIf="estatus!=2">
+            <ion-buttons start>
+                    <button  *ngIf="DatosUsuario.boss == 1" ion-button large icon-right color="primary" (click)="irNotificaciones()"><ion-icon name="ios-home"></ion-icon></button>
+                <button ion-button large icon-right color="primary" (click)="menuBoss()"><ion-icon name="ios-menu"></ion-icon></button>
+            </ion-buttons>
+            <ion-buttons end>
+                <button ion-button large icon-right color="primary" (click)="irAlertas()"><ion-icon name="ios-alert-outline"></ion-icon></button>
+                <button ion-button large icon-right color="primary" (click)="verPorAut()"><ion-icon name="ios-checkmark-circle-outline"></ion-icon></button>
+                <button ion-button large icon-right color="primary" (click)="irReportesBoss()"><ion-icon name="ios-paper-outline"></ion-icon></button>
+                <button ion-button large icon-right color="primary" (click)="irDocumentos()"><ion-icon name="ios-folder-open-outline"></ion-icon></button>
+            </ion-buttons>
+        </ion-toolbar>
+    </ion-navbar>
+    <div *ngIf="estatus == 0 || estatus == 1">
+        <ion-title [ngStyle]="{'background-color': color}">
+            <ion-grid>
+                <ion-row>
+                    <ion-col col-3 class="botonTop">
+                        <button ion-button block clear [disabled]="form.invalid || gp" (click)="guardarMensaje()" color="textoEdicion">{{opcionBoton}}</button>
+                    </ion-col>
+                    <ion-col>
+                        <h5 *ngIf="DatosUsuario.so == 'android'" class="androidTitulo" ion-text color="light">{{titulo}}</h5>
+                        <h5 *ngIf="DatosUsuario.so == 'ios'" ion-text color="light">{{titulo}}</h5>
+                    </ion-col>
+                    <ion-col col-3 class="botonTop">
+                        <button ion-button block clear [disabled]="form.invalid || gp" (click)="borrarMensaje()" color="textoEdicion">{{opcionBoton2}}</button>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-title>
+    </div>
+    <div *ngIf="(mensaje!=undefined && mensaje!=null) && (mensaje.estatus==2 && (estatus == 2))">
+        <ion-title class="autMargen">
+            <p>
+                ¿Desea Autorizar?
+            </p>
+            <ion-grid class="margenAutorizacion">
+                <ion-row>
+                    <ion-col col-5 class="botonTop">
+                        <button ion-button ion-button block clear color="secondary" [disabled]="form.invalid" (click)="autorizar(1)"><ion-icon style="font-size: 90px;" name="md-checkmark-circle"></ion-icon></button>
+                    </ion-col>
+                    <ion-col col-5 class="botonTop">
+                        <button ion-button ion-button block clear color="danger" [disabled]="form.invalid" (click)="autorizar(2)"><ion-icon style="font-size: 90px;" name="md-close-circle"></ion-icon></button>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-title>
+    </div>
+</ion-header>
+<ion-content padding>
+    <ion-list>
+        <form [formGroup]="form" novalidate>
+            <ion-grid>
+                <ion-row *ngIf="tema == 0">
+                    <ion-item>
+                        <ion-label floating [ngStyle]="{'color': color2}">Tema</ion-label>
+                        <ion-select [disabled]="deshabiltarCampo()" formControlName="tema" okText="Aceptar" cancelText="Cancelar" (ionChange)="actualizarTema($event)">
+                            <ion-option *ngFor="let tm of listaTemas" [value]="tm.id">{{tm.nombre}}</ion-option>
+                        </ion-select>
+                    </ion-item>
+                    <ion-item *ngIf="form.get('tema').errors && form.get('tema').touched">
+                        <p *ngIf="form.get('tema').hasError('required')" ion-text color="danger">Es requerido</p>
+                    </ion-item>
+                </ion-row>
+                <ion-row>
+                    <ion-item class="form-group">
+                        <ion-label floating [ngStyle]="{'color': color2}">Tarea</ion-label>
+                        <ion-select [disabled]="deshabiltarCampo()" formControlName="tarea" okText="Aceptar" cancelText="Cancelar" (ionChange)="habiltarDatosTarea($event)">
+                            <ion-option *ngFor="let tarea of listaTareas" [value]="tarea.id">{{tarea.descripcion}}</ion-option>
+                        </ion-select>
+                    </ion-item>
+                    <ion-item *ngIf="form.get('numproy').errors && form.get('numproy').touched">
+                        <p *ngIf="form.get('numproy').hasError('required')" ion-text color="danger">Es requerido</p>
+                    </ion-item>
+                </ion-row>
+                <ion-row>
+                    <ion-item class="form-group">
+                        <ion-label floating [ngStyle]="{'color': color2}">Proyecto</ion-label>
+                        <ion-select [disabled]="deshabiltarCampo()" formControlName="numproy" okText="Aceptar" cancelText="Cancelar" (ionChange)="imprimirParametro($event)">
+                            <ion-option *ngFor="let proy of listaProyectos" [value]="proy.numproy">{{proy.nombre}}</ion-option>
+                        </ion-select>
+                    </ion-item>
+                    <ion-item *ngIf="form.get('numproy').errors && form.get('numproy').touched">
+                        <p *ngIf="form.get('numproy').hasError('required')" ion-text color="danger">Es requerido</p>
+                    </ion-item>
+                </ion-row>
+                <ion-row>
+                    <ion-item class="form-group">
+                        <ion-label floating [ngStyle]="{'color': color2}">No. Referencia</ion-label>
+                        <ion-input [disabled]="deshabiltarCampo()" type="number" formControlName="numdocumento" (change)="validarDocumento($event.target.value)"></ion-input>
+                    </ion-item>
+                    <ion-item *ngIf="form.get('numdocumento').errors && form.get('numdocumento').touched">
+                        <p *ngIf="form.get('numdocumento').hasError('required')" ion-text color="danger">Es requerido</p>
+                    </ion-item>
+                </ion-row>
+                <ion-row *ngIf="campo_razonsocial == 1">
+                    <ion-item>
+                        <ion-label floating [ngStyle]="{'color': color2}">{{razonSocial}}</ion-label>
+                        <ion-select [disabled]="deshabiltarCampo()" formControlName="cliente" okText="Aceptar" cancelText="Cancelar">
+                            <ion-option *ngFor="let pv of listaProveedores" [value]="pv.id">{{pv.nombre}}</ion-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-row>
+                <ion-row>
+                    <ion-item *ngIf="form.controls.soporte.value != null && form.controls.soporte.value != 0">
+                        <ion-label floating [ngStyle]="{'color': color2}">Docto. Soporte</ion-label>
+                        <ion-input [disabled]="deshabiltarCampo()" type="text" formControlName="soporte"></ion-input>
+                    </ion-item>
+                </ion-row>
+                <ion-row>
+                    <ion-item>
+                        <ion-label floating [ngStyle]="{'color': color2}">Fecha</ion-label>
+                        <ion-datetime [disabled]="deshabiltarCampo()" text-left displayFormat="DD/MM/YYYY" formControlName="fecha_elab"></ion-datetime>
+                    </ion-item>
+                    <ion-item *ngIf="form.get('fecha_elab').errors && form.get('fecha_elab').touched">
+                        <p *ngIf="form.get('fecha_elab').hasError('required')" ion-text color="danger">Es requerido</p>
+                    </ion-item>
+                </ion-row>
+                <ion-row *ngIf="campo_monto == 1">
+                    <ion-col>
+                        <ion-item>
+                            <ion-label floating [ngStyle]="{'color': color2}">Monto</ion-label>
+                            <ion-input [disabled]="deshabiltarCampo()" type="text" formControlName="monto"></ion-input>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col col-5>
+                        <ion-item>
+                            <ion-label text-center floating [ngStyle]="{'color': color2}">Moneda</ion-label>
+                            <ion-select [disabled]="deshabiltarCampo()" text-center formControlName="moneda" okText="Aceptar" cancelText="Cancelar">
+                                <ion-option *ngFor="let mn of listaMonedas" [value]="mn.id">{{mn.id}}</ion-option>
+                            </ion-select>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-item>
+                        <ion-label floating [ngStyle]="{'color': color2}">Nota</ion-label>
+                        <ion-textarea [disabled]="deshabiltarCampo()" text-left formControlName="nota"></ion-textarea>
+                    </ion-item>
+                </ion-row>
+                <ion-row>
+                    <ion-item>
+                        <ion-label floating [ngStyle]="{'color': color2}">Estatus</ion-label>
+                        <ion-select [disabled]="soloLectura()" [ngStyle]="{'color': colorEstatus}" formControlName="estatus" okText="Aceptar" cancelText="Cancelar">
+                            <ion-option *ngFor="let st of listaEstatus" [value]="st.id">{{st.nombre}}</ion-option>
+                        </ion-select>
+                    </ion-item>
+                    <ion-item *ngIf="form.get('estatus').errors && form.get('estatus').touched">
+                        <p *ngIf="form.get('estatus').hasError('required')" ion-text color="danger">Es requerido</p>
+                    </ion-item>
+                </ion-row>
+                <ion-row *ngIf="estatusMensaje == 2 || estatusMensaje == 3 || estatusMensaje == 4">
+                    <ion-item>
+                        <ion-label floating [ngStyle]="{'color': color2}">{{tituloAut}}</ion-label>
+                        <ion-select [disabled]="deshabiltarCampo()" formControlName="autorizado_por" okText="Aceptar" cancelText="Cancelar">
+                            <ion-option *ngFor="let usr of listaUsuarios" [value]="usr.id">{{usr.nombre}}</ion-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-row>
+                <ion-row *ngIf="estatusMensaje == 3 || estatusMensaje == 4">
+                    <ion-item>
+                        <ion-label floating [ngStyle]="{'color': color2}">{{tituloFechaEstatus}}</ion-label>
+                        <ion-datetime [disabled]="deshabiltarCampo()" text-left displayFormat="DD/MM/YYYY" formControlName="fecha_aut"></ion-datetime>
+                    </ion-item>
+                </ion-row>
+            </ion-grid>
+        </form>
+    </ion-list>
+    <ion-list no-lines *ngFor="let archivo of tempImageList">
+        <div *ngIf="archivo.formato == 'jpg'" class="imagenes">
+            <img src="{{archivo.ruta}}" alt="">
+            <div class="descripcionImagen">
+                <ion-row>
+                    <ion-col>
+                        {{archivo.nombre}}
+                    </ion-col>
+                </ion-row>
+            </div>
+        </div>
+    </ion-list>
+    <ion-list no-lines *ngFor="let archivo of listaArchivosMensajes">
+        <div *ngIf="archivo.formato == 'jpg'" class="imagenes">
+            <img [src]="returnPathFile('http://142.4.197.18:8000/', archivo.nombre)" alt="" (click)="imageFullSize('http://142.4.197.18:8000/', archivo)">
+            <div class="descripcionImagen">
+                <ion-row>
+                    <ion-col>
+                        {{archivo.nombreOriginal}}
+                    </ion-col>
+                    <ion-col>
+                        <ion-buttons end>
+                            <button ion-button icon-only clear (click)="compartirArchivo(archivo)"><ion-icon name="ios-share-outline"></ion-icon></button>
+                            <button ion-button icon-only clear (click)="borrarArchivo(archivo)"><ion-icon name="ios-trash-outline"></ion-icon></button>
+                        </ion-buttons>
+                    </ion-col>
+                </ion-row>
+            </div>
+        </div>
+    </ion-list>
+    <ion-list *ngFor="let archivo of listaArchivosMensajes" no-lines>
+        <div *ngIf="archivo.formato != 'jpg' && archivo.formato != 'mp4' && archivo.formato != '3gp'">
+            <ion-item class="archivos" (click)="accionArchivos(archivo)">
+                <ion-thumbnail item-left>
+                    <img *ngIf="archivo.formato == 'xlsx' || archivo.formato == 'xls'" src="assets/img/excelIcono.png">
+                    <img *ngIf="archivo.formato == 'mpp' || archivo.formato == 'mpp'" src="assets/img/projectIcono.png">
+                    <img *ngIf="archivo.formato == 'pdf'" src="assets/img/pdfIcono.png">
+                    <img *ngIf="archivo.formato == 'docx' || archivo.formato == 'doc'" src="assets/img/wordIcono.png">
+                    <img *ngIf="archivo.formato == 'dwg'" src="assets/img/autocadIcono.png">
+                </ion-thumbnail>
+                {{archivo.nombreOriginal}}
+            </ion-item>
+        </div>
+    </ion-list>
+    <ion-list *ngFor="let archivo of tempVideoList" no-lines>
+        <div *ngIf="archivo.formato == 'mp4'" class="archivoVideo">
+            <video width="100%" controls>
+                    <source src="{{archivo.ruta}}" type="video/mp4">
+                </video>
+            <div class="descripcionImagen">
+                <ion-row>
+                    <ion-col>
+                        {{archivo.nombre}}
+                    </ion-col>
+                </ion-row>
+            </div>
+        </div>
+    </ion-list>
+    <ion-list *ngFor="let archivo of listaArchivosMensajes" no-lines>
+        <div *ngIf="archivo.formato == 'mp4'" class="archivoVideo">
+            <video width="100%" controls>
+                    <source [src]="returnPathFile('http://142.4.197.18:8000/', archivo.nombre)" type="video/mp4">
+                </video>
+            <div class="descripcionImagen">
+                <ion-row>
+                    <ion-col>
+                        {{archivo.nombreOriginal}}
+                    </ion-col>
+                    <ion-col>
+                        <ion-buttons end>
+                            <button ion-button icon-only clear (click)="borrarArchivo(archivo)"><ion-icon name="ios-trash-outline"></ion-icon></button>
+                        </ion-buttons>
+                    </ion-col>
+                </ion-row>
+            </div>
+        </div>
+    </ion-list>
+    <ion-list *ngFor="let archivo of listaArchivosMensajes" no-lines>
+        <div *ngIf="archivo.formato == '3gp'" class="archivoVideo">
+            <audio controls>
+                    <source [src]="returnPathFile('http://142.4.197.18:8000/', archivo.nombre)" type="audio/mp3">
+            </audio>
+            <div class="descripcionImagen">
+                <ion-row>
+                    <ion-col>
+                        {{archivo.nombreOriginal}}
+                    </ion-col>
+                    <ion-col>
+                        <ion-buttons end>
+                            <button ion-button icon-only clear (click)="borrarArchivo(archivo)"><ion-icon name="ios-trash-outline"></ion-icon></button>
+                        </ion-buttons>
+                    </ion-col>
+                </ion-row>
+            </div>
+        </div>
+    </ion-list>
+    <ion-list *ngFor="let archivo of tempAudioList" no-lines>
+        <div *ngIf="archivo.formato == '3gp'" class="archivoVideo">
+            <audio controls>
+                    <source src="{{archivo.ruta}}" type="audio/3gp">
+            </audio>
+            <div class="descripcionImagen">
+                <ion-row>
+                    <ion-col>
+                        {{archivo.nombre}}
+                    </ion-col>
+                </ion-row>
+            </div>
+        </div>
+    </ion-list>
+</ion-content>
+<ion-footer>
+    <ion-toolbar *ngIf="estatus!=2">
+        <ion-buttons *ngIf="DatosUsuario.so == 'android'" class="bottomMarginToolAndroid" end>
+            <button ion-button icon-only icon-left color="primary" (click)="mandarAlerta()"><ion-icon name="ios-warning-outline"></ion-icon></button>
+            <button ion-button icon-only icon-left color="primary" (click)="mandarAutorizar()"><ion-icon name="ios-checkbox-outline"></ion-icon></button>
+            <button ion-button icon-only icon-left color="primary"  (click)="subirArchivo()" icon-right color="primary"><ion-icon name="ios-folder-outline"></ion-icon></button>
+            <button ion-button icon-only icon-left color="primary"  (click)="subirAudio()" icon-right color="primary"><ion-icon name="ios-mic-outline"></ion-icon></button>
+            <button ion-button icon-only class="action-sheets-basic-pages" icon-center color="primary" (click)="subirVideos()"><ion-icon name="ios-videocam-outline"></ion-icon></button>
+            <button ion-button icon-only icon-right color="primary" (click)="presentActionSheetCamara()"><ion-icon name="ios-camera-outline"></ion-icon></button>
+            <button ion-button icon-only icon-right color="primary" (click)="ligarDocumento()"><ion-icon name="ios-attach-outline"></ion-icon></button>
+            <button ion-button icon-only icon-right color="primary" (click)="generarNuevo()"><ion-icon name="ios-create-outline"></ion-icon></button>
+        </ion-buttons>
+        <ion-buttons *ngIf="DatosUsuario.so == 'ios'" class="bottomMarginToolIos" end>
+            <button ion-button icon-only icon-left color="primary" (click)="mandarAlerta()"><ion-icon name="ios-warning-outline"></ion-icon></button>
+            <button ion-button icon-only icon-left color="primary" (click)="mandarAutorizar()"><ion-icon name="ios-checkbox-outline"></ion-icon></button>
+            <button ion-button icon-only icon-left color="primary"  (click)="subirArchivo()" icon-right color="primary"><ion-icon name="ios-folder-outline"></ion-icon></button>
+            <button ion-button icon-only icon-left color="primary"  (click)="subirAudio()" icon-right color="primary"><ion-icon name="ios-mic-outline"></ion-icon></button>
+            <button ion-button icon-only class="action-sheets-basic-pages" icon-center color="primary" (click)="subirVideos()"><ion-icon name="ios-videocam-outline"></ion-icon></button>
+            <button ion-button icon-only icon-right color="primary" (click)="presentActionSheetCamara()"><ion-icon name="ios-camera-outline"></ion-icon></button>
+            <button ion-button icon-only icon-right color="primary" (click)="ligarDocumento()"><ion-icon name="ios-attach-outline"></ion-icon></button>
+            <button ion-button icon-only icon-right color="primary" (click)="generarNuevo()"><ion-icon name="ios-create-outline"></ion-icon></button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-footer>

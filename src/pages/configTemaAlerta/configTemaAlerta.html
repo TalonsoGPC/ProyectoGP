@@ -1,0 +1,21 @@
+<ion-header>
+    <ion-navbar>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <ion-list *ngFor="let tema of listaTemas" no-lines>
+        <ion-grid>
+            <ion-row>
+                <ion-col col-3>
+                    <img src="assets/co/{{tema.imagen}}">
+                </ion-col>
+                <ion-col col-6>
+                    {{tema.nombre}}
+                </ion-col>
+                <ion-col col-2>
+                    <ion-toggle value="tema.nombre" checked="false" color="primary"></ion-toggle>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-list>
+</ion-content>

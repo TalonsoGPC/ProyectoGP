@@ -1,0 +1,39 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+            Modelos
+        </ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="irBoss()"><ion-icon name="ios-menu"></ion-icon></button>
+            <button ion-button clear icon-only item-left (click)="nuevoModelo()"><ion-icon name="ios-create-outline"></ion-icon></button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <ion-list *ngFor="let modelo of listaModelos" no-lines>
+        <ion-grid>
+            <ion-row>
+                <!--ion-col>
+                    <ion-item text-wrap>
+                        <ion-label (click)="verModelo(modelo)">{{modelo.nombre_proyecto}}</ion-label>
+                    </ion-item>
+                </ion-col>
+                <ion-col-->
+                <ion-item text-wrap>
+                    <ion-label (click)="verModelo(modelo)">{{modelo.descripcion}}</ion-label>
+                </ion-item>
+                <!--/ion-col-->
+            </ion-row>
+        </ion-grid>
+    </ion-list>
+</ion-content>
+<ion-footer no-border>
+    <ion-toolbar>
+        <ion-buttons start>
+            <button ion-button icon-only color="primary" (click)="getFiltro()"><ion-icon name="md-funnel"></ion-icon></button>
+        </ion-buttons>
+        <ion-title>
+            {{tituloFiltro}}
+        </ion-title>
+    </ion-toolbar>
+</ion-footer>

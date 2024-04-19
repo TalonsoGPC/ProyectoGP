@@ -1,0 +1,44 @@
+<ion-header>
+</ion-header>
+<ion-content>
+    <div class="titulos">
+        <ion-grid>
+            <ion-row>
+                <ion-title>
+                    <h2 [ngStyle]="{'color': 'white', 'text-align': 'center'}">¿Cuál tu giro o <br>actividad?</h2>
+                </ion-title>
+            </ion-row>
+        </ion-grid>
+    </div>
+    <form (submit)="cambiarActividad($event)" [formGroup]="actividadForm" class="actividad">
+        <ion-list radio-group formControlName="actividad">
+            <ion-item>
+                <ion-label ion-text color="textoColor2">Constructora</ion-label>
+                <ion-radio value="constructora"></ion-radio>
+            </ion-item>
+            <ion-item>
+                <ion-label ion-text color="textoColor2">Inmobiliaria</ion-label>
+                <ion-radio value="inmobiliaria"></ion-radio>
+            </ion-item>
+            <ion-item>
+                <ion-label ion-text color="textoColor2">Contratista</ion-label>
+                <ion-radio value="contratista"></ion-radio>
+            </ion-item>
+            <ion-item>
+                <ion-label ion-text color="textoColor2">Otro giro</ion-label>
+                <ion-radio value="giro"></ion-radio>
+            </ion-item>
+            <ion-item>
+                <ion-label ion-text color="textoColor2">Independiente</ion-label>
+                <ion-radio value="independiente"></ion-radio>
+            </ion-item>
+        </ion-list>
+    </form>
+</ion-content>
+<ion-footer>
+    <ion-navbar transparent color="primary">
+        <ion-buttons end>
+            <button ion-button clear color="light" (click)="registroCuenta()">Continuar<ion-icon icon-only style="font-size: 33px;" name="ios-arrow-forward"></ion-icon></button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-footer>

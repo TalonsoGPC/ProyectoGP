@@ -1,0 +1,86 @@
+<ion-header no-border>
+    <ion-navbar>
+        <div class="toolbarTopReq">
+            <ion-toolbar>
+                <ion-buttons end>
+                        <button  *ngIf="DatosUsuario.boss == 1" ion-button large icon-right color="primary" (click)="irNotificaciones()"><ion-icon name="ios-home"></ion-icon></button>
+                    <button ion-button large icon-right color="primary" (click)="menuBoss()"><ion-icon name="ios-menu"></ion-icon></button>
+                </ion-buttons>
+            </ion-toolbar>
+        </div>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-list *ngFor="let item of listaMensajesPorTema">
+        <div *ngIf="item.ocultar == 1">
+            <div *ngIf="item.id >= 0">
+                <span *ngIf="item.archivos > 0">
+                <span>
+                    <ion-icon style=" position: absolute; left: 2px; margin-top: 30px;" name="ios-aperture" icon-left [ngStyle]="{'color': item.color_tema}"></ion-icon>
+                    <!--ion-icon *ngIf="item.estatus == 2" style=" position: absolute; left: 2px; margin-top: 30px;" name="radio-button-on" icon-left color="ambar"></ion-icon>
+                    <ion-icon *ngIf="item.estatus == 3" style=" position: absolute; left: 2px; margin-top: 30px;" name="radio-button-on" icon-left color="verde"></ion-icon>
+                    <ion-icon *ngIf="item.estatus == 4" style=" position: absolute; left: 2px; margin-top: 30px;" name="radio-button-on" icon-left color="danger"></ion-icon-->
+                </span>
+                </span>
+                <span *ngIf="item.archivos < 1">
+                 <ion-icon  style="position: absolute; left: 2px; margin-top: 10px;" name="ios-aperture" icon-left [ngStyle]="{'color': item.color_tema}"></ion-icon>
+                    <!--ion-icon *ngIf="item.estatus == 2" style=" position: absolute; left: 2px; margin-top: 10px;" name="radio-button-on" icon-left color="ambar"></ion-icon>
+                    <ion-icon *ngIf="item.estatus == 3" style=" position: absolute; left: 2px; margin-top: 10px;" name="radio-button-on" icon-left color="verde"></ion-icon>
+                    <ion-icon *ngIf="item.estatus == 4" style=" position: absolute; left: 2px; margin-top: 10px;" name="radio-button-on" icon-left color="danger"></ion-icon-->
+            </span>
+            </div>
+            <div *ngIf="item.archivos > 0 ">
+                <span *ngIf="item.id >= 0">
+                <br>
+                <ion-icon style="position: absolute; left: 5px; margin-top: 30px;" name="ios-attach" icon-left color="dark"></ion-icon>
+            </span>
+            </div>
+            <a href="#" (click)="verMensaje(item)">
+                <ion-item item-left icon-left>
+                    <h2 text-wrap>
+                        {{item.nombre_proyecto}}
+                    </h2>
+                    <h2>
+                        {{item.modelo_propiedad}}
+                    </h2>
+                    <p text-wrap>
+                        {{item.especificaciones_propiedad}}
+                    </p>
+                    <p text-wrap *ngIf="item.desc_tipo_operacion != null">
+                        Operación: {{item.desc_tipo_operacion}}
+                    </p>
+                    <p text-wrap *ngIf="item.precio != null">
+                        $ {{item.precio | number}}
+                    </p>
+                    <p [ngStyle]="{'color': item.color_tema}">Estatus: {{item.descripcion_tema}}</p>
+                    <p *ngIf="item.vendedor_nombre != null " text-wrap>
+                        Vendedor: {{item.vendedor_nombre}}
+                    </p>
+                    <p *ngIf="item.cliente != null " text-wrap>
+                        Cliente: {{item.cliente}}
+                    </p>
+                    <p>Ultimo Movimiento: {{item.fecha_registro | date: 'dd/MM/yyyy' }}</p>
+                    <img *ngIf="item.archivo_nombre!=null" [src]="returnPathFile('http://142.4.197.18:8000/', item.archivo_nombre)" alt="">
+                    <!--ion-note item-right>
+                        {{item.fecha | date: 'dd/MM'}}
+                    </ion-note-->
+                    <ion-icon class="flechaNext" name="ios-arrow-forward" icon-rigth></ion-icon>
+                </ion-item>
+            </a>
+        </div>
+    </ion-list>
+</ion-content>
+<ion-footer no-border>
+    <ion-toolbar>
+        <ion-buttons start>
+            <button ion-button icon-only color="primary" (click)="getFiltro()"><ion-icon name="md-funnel"></ion-icon></button>
+        </ion-buttons>
+        <ion-title>
+            {{tituloConstructor}}
+        </ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only color="primary" (click)="generarNuevo()"><ion-icon name="ios-create-outline"></ion-icon></button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-footer>

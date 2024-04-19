@@ -1,0 +1,75 @@
+notificaciones-page{
+
+    .ImagenLogo{
+        display: inline-flex;
+        width: 15px;
+        height: 15px;
+    }
+
+    ion-thumbnail{
+        margin-left: -10px !important;
+    }
+
+    ion-thumbnail img{
+        position: absolute;
+        top: 15px !important;
+    }
+
+    .conImagen img{
+        width: 45px !important;
+        height: 45px !important;
+        float: left;
+        position: fixed;
+    }
+
+    .sinImagen img{
+        width: 45px !important;
+        height: 45px !important;
+        margin-bottom: 100px !important;
+    }
+
+    .imagenItem{
+        margin-top: 1px !important;
+        width: 100% !important;
+        height:  auto !important;
+    }
+
+    .temaAndroid img{
+        width: 18% !important;
+        height: auto !important;
+    }
+
+    .TextoLogo{
+        display: inline-flex;
+        padding-left: .8em;
+    }
+
+    ion-item {
+        display: inline-flex;
+        margin-bottom: -35px !important;
+    }
+
+    .FechaLogo{
+        text-align: right;
+        padding-left: 2.0 em;
+        font-size: .7em;
+    } 
+
+    .Texto{
+        font-size: .7em; 
+    }
+
+    ion-row{
+        margin-top: -10px;
+    }
+
+    ion-grid{
+        margin-left: -10px !important;
+    }
+    
+    .BorrarLogo{
+        text-align: right;
+        margin-top: -15px !important;
+    } 
+
+}

@@ -1,0 +1,40 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+            {{tituloResumenVentas}}
+        </ion-title>
+    </ion-navbar>
+    <ion-toolbar color="dark">
+        <p [ngStyle]="{'color': '#ffffff', 'overflow':'hidden', 'text-overflow': 'ellipsis', 'font-size': ' 14px'}">{{titulo}}</p>
+        <ion-buttons end class="endButtons">
+            <button ion-button block clear color="carpetaProyecto"><h1>{{totalPropiedades}}</h1></button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <ion-list *ngFor="let tema of listaResumen" no-lines>
+        <ion-item class="tema-group">
+            <ion-thumbnail item-left icon-rigth>
+                <img src="assets/ve/{{tema.imagen}}">
+            </ion-thumbnail>
+            <ion-row>
+                <ion-col>
+                    <h2>{{tema.descripcion}}</h2>
+                </ion-col>
+                <ion-col>
+                    <h2 [ngStyle]="{ 'text-align' : 'right' }">{{tema.cantidad}}</h2>
+                </ion-col>
+            </ion-row>
+        </ion-item>
+    </ion-list>
+</ion-content>
+<ion-footer no-border>
+    <ion-toolbar>
+        <ion-buttons start>
+            <button ion-button icon-only color="primary" (click)="getFiltro()"><ion-icon name="md-funnel"></ion-icon></button>
+        </ion-buttons>
+        <ion-title>
+            {{tituloPie}}
+        </ion-title>
+    </ion-toolbar>
+</ion-footer>

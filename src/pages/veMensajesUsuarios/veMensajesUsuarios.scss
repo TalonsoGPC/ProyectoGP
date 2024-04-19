@@ -1,0 +1,61 @@
+veMensajesUsuarios-page {
+    ion-buttons.bottomMarginToolIos button {
+        margin-left: 27px !important;
+    }
+    ion-buttons.bottomMarginToolAndroid button {
+        margin-left: 28px !important;
+    }
+    div.imagenes {
+        width: 100%;
+        background-color: white;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
+    }
+    div.imagenes:hover {
+        background-color: lightblue;
+    }
+    div.imagenes img {
+        margin-left: 15px !important;
+        margin-top: 10px !important;
+        width: 90%;
+    }
+    div.descripcionImagen {
+        text-align: center;
+        padding: 10px 20px;
+    }
+    div.descripcionImagen button {
+        margin-top: -15px !important;
+    }
+    
+    ion-item.archivos {
+        margin-left: 3px !important;
+        width: 100%;
+        background-color: white;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
+    }
+    ion-item.archivos:hover {
+        background-color: lightblue;
+    }
+    ion-item.archivos img {
+        width: 64px;
+        height: 64px;
+    }
+    textarea {
+        resize: both;
+        height: 80px !important;
+    }
+    div.archivoVideo {
+        width: 100%;
+        background-color: white;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
+    }
+    div.archivoVideo video {
+        margin-top: 10px !important;
+    }
+    ion-item.archivoVideo:hover {
+        background-color: lightblue;
+    }
+    .tituloTool {
+        display: block;
+        text-align: center;
+    }
+}

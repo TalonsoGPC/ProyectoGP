@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>logFormatVersion</key>
+	<integer>10</integer>
+	<key>logs</key>
+	<dict>
+		<key>464D904F-EADE-49D0-9E0D-C4037439B854</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogMajorGroupSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.target.product-type.library.static</string>
+			<key>fileName</key>
+			<string>464D904F-EADE-49D0-9E0D-C4037439B854.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>W</string>
+			</dict>
+			<key>signature</key>
+			<string>CordovaLib-fsufiiextmdpttfvzbbiwouhlmqe</string>
+			<key>timeStartedRecording</key>
+			<real>673590620.98634303</real>
+			<key>timeStoppedRecording</key>
+			<real>673590695.79614496</real>
+			<key>title</key>
+			<string>Build target CordovaLib</string>
+			<key>uniqueIdentifier</key>
+			<string>464D904F-EADE-49D0-9E0D-C4037439B854</string>
+		</dict>
+		<key>78D79E2F-A48D-4A20-A78A-C0D5C8FD639C</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogMajorGroupSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.target.product-type.application</string>
+			<key>fileName</key>
+			<string>78D79E2F-A48D-4A20-A78A-C0D5C8FD639C.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>E</string>
+			</dict>
+			<key>signature</key>
+			<string>ProjectGP-gddpkfadzhcdvxglaidgfyhjkmre</string>
+			<key>timeStartedRecording</key>
+			<real>673590695.79922295</real>
+			<key>timeStoppedRecording</key>
+			<real>673590807.93815994</real>
+			<key>title</key>
+			<string>Build target ProjectGP</string>
+			<key>uniqueIdentifier</key>
+			<string>78D79E2F-A48D-4A20-A78A-C0D5C8FD639C</string>
+		</dict>
+	</dict>
+	<key>preserveOldLogs</key>
+	<true/>
+</dict>
+</plist>

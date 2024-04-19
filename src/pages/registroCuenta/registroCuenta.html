@@ -1,0 +1,94 @@
+<ion-header>
+    <!--ion-toolbar>
+        <ion-buttons start>
+            <button ion-button clear (click)="terminarRegistro()"><ion-icon name="ios-close-circle-outline"></ion-icon></button>
+        </ion-buttons>
+        <ion-title>
+            Registro
+        </ion-title>
+        <ion-buttons end>
+            <button ion-button clear (click)="terminarRegistro()">Registrar</button>
+        </ion-buttons>
+    </ion-toolbar-->
+</ion-header>
+<ion-content>
+    <ion-grid class="titulos">
+        <ion-row>
+            <ion-title>
+                <h1 [ngStyle]="{'color': 'white', 'text-align': 'center'}">Registro</h1>
+            </ion-title>
+        </ion-row>
+    </ion-grid>
+    <div class="mss-error" *ngIf="mssError!='' && mssError!=null">
+        <p [ngStyle]="{'color' : 'red', 'font-size': '17px', 'text-align': 'center' }">{{mssError}}</p>
+    </div>
+    <div>
+        <!--ion-input [ngStyle]="{'width' : '78%', 'margin-left' : '11%', 'margin-bottom' : '-80px' }" type="empresa" placeholder=" Nombre Empresa" (ionChange)="actulizarEmpresa($event)"></ion-input-->
+        <form [formGroup]="form" class="registro-cuenta">
+            <ion-grid>
+                <ion-row>
+                    <ion-input [readonly]="soloLectura()" type="text" formControlName="empresa" placeholder=" Nombre Empresa" (change)="actualizarEmpresa($event.target.value)"></ion-input>
+                </ion-row>
+                <ion-row>
+                    <div [ngStyle]="{'color' : 'red'}" *ngIf="form.controls.empresa.errors && form.controls.empresa.touched">
+                        <div *ngIf="form.controls.empresa.errors.required">
+                            <p>El campo es requerido</p>
+                        </div>
+                        <div *ngIf="form.controls.empresa.errors.valorUnico">
+                            <p>La empresa no existe</p>
+                        </div>
+                    </div>
+                </ion-row>
+                <ion-row>
+                    <ion-input [readonly]="soloLectura()" type="text" formControlName="nombre" placeholder=" Nombre Completo del Usuario"></ion-input>
+                </ion-row>
+                <ion-row>
+                    <div [ngStyle]="{'color' : 'red'}" *ngIf="form.controls.nombre.errors && form.controls.nombre.touched">
+                        <div *ngIf="form.controls.nombre.errors.required">
+                            <p>El campo es requerido</p>
+                        </div>
+                    </div>
+                </ion-row>
+                <ion-row>
+                    <ion-input [readonly]="soloLectura()" type="text" formControlName="cveusuario" placeholder=" Clave Usuario"></ion-input>
+                </ion-row>
+                <ion-row>
+                    <div [ngStyle]="{'color' : 'red'}" *ngIf="form.controls.cveusuario.errors && form.controls.cveusuario.touched">
+                        <div *ngIf="form.controls.cveusuario.errors.required">
+                            <p>El campo es requerido</p>
+                        </div>
+                    </div>
+                </ion-row>
+                <ion-row>
+                    <ion-input type="text" formControlName="correo" placeholder=" Correo" (change)="validarCorreo($event.target.value)"></ion-input>
+                </ion-row>
+                <ion-row>
+                    <div [ngStyle]="{'color' : 'red'}" *ngIf="form.controls.correo.errors && form.controls.correo.touched">
+                        <div *ngIf="form.controls.correo.errors.required">
+                            <p>El campo es requerido</p>
+                        </div>
+                    </div>
+                </ion-row>
+                <ion-row>
+                    <ion-input type="password" formControlName="password" placeholder=" Contraseña"></ion-input>
+                </ion-row>
+                <ion-row>
+                    <div [ngStyle]="{'color' : 'red'}" *ngIf="form.controls.password.errors && form.controls.password.touched">
+                        <div *ngIf="form.controls.password.errors.required">
+                            <p>El campo es requerido</p>
+                        </div>
+                    </div>
+                </ion-row>
+            </ion-grid>
+        </form>
+        <ion-input [ngStyle]="{'width' : '78%', 'margin-left' : '11%', 'margin-top' : '-5px' }" type="password" [(ngModel)]="passConfirmacion" placeholder=" Confirmar Contraseña" (change)="validarPassword($event.target.value)"></ion-input>
+        <button round ion-button block clear color="light" (click)="registrarUsuario()" [disabled]="!form.valid || mssError.length>0 || !registrar"><p [ngStyle]="{'font-size':'20px'}">Registrar</p></button>
+    </div>
+</ion-content>
+<ion-footer>
+    <ion-navbar transparent color="primary">
+        <ion-buttons end>
+            <button ion-button clear color="light" (click)="terminarRegistro()">Entrar<ion-icon icon-only style="font-size: 33px;" name="ios-arrow-forward"></ion-icon></button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-footer>

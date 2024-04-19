@@ -1,0 +1,76 @@
+{
+  "prepare_queue": {
+    "installed": [],
+    "uninstalled": []
+  },
+  "config_munge": {
+    "files": {}
+  },
+  "installed_plugins": {
+    "com-sarriaroman-photoviewer": {
+      "PACKAGE_NAME": "com.projectgp.gpconstruct"
+    },
+    "com.hutchind.cordova.plugins.streamingmedia": {
+      "PACKAGE_NAME": "com.projectgp.gpconstruct"
+    },
+    "cordova-plugin-badge": {
+      "PACKAGE_NAME": "com.projectgp.gpconstruct"
+    },
+    "cordova-plugin-camera": {
+      "PACKAGE_NAME": "com.projectgp.gpconstruct"
+    },
+    "cordova-plugin-device": {
+      "PACKAGE_NAME": "com.projectgp.gpconstruct"
+    },
+    "cordova-plugin-document-viewer": {
+      "PACKAGE_NAME": "com.projectgp.gpconstruct"
+    },
+    "cordova-plugin-file": {
+      "PACKAGE_NAME": "com.projectgp.gpconstruct"
+    },
+    "cordova-plugin-file-opener2": {
+      "PACKAGE_NAME": "com.projectgp.gpconstruct"
+    },
+    "cordova-plugin-file-transfer": {
+      "PACKAGE_NAME": "com.projectgp.gpconstruct"
+    },
+    "cordova-plugin-ionic-keyboard": {
+      "PACKAGE_NAME": "com.projectgp.gpconstruct"
+    },
+    "cordova-plugin-ionic-webview": {
+      "PACKAGE_NAME": "com.projectgp.gpconstruct"
+    },
+    "cordova-plugin-media-capture": {
+      "PACKAGE_NAME": "com.projectgp.gpconstruct"
+    },
+    "cordova-plugin-splashscreen": {
+      "PACKAGE_NAME": "com.projectgp.gpconstruct"
+    },
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "com.projectgp.gpconstruct"
+    },
+    "cordova-plugin-x-socialsharing": {
+      "PACKAGE_NAME": "com.projectgp.gpconstruct"
+    },
+    "cordova-plugin-nativestorage": {
+      "PACKAGE_NAME": "com.projectgp.gpconstruct"
+    },
+    "cordova-sqlite-storage": {
+      "PACKAGE_NAME": "com.projectgp.gpconstruct"
+    },
+    "cordova-plugin-filepicker": {
+      "PACKAGE_NAME": "com.projectgp.gpconstruct"
+    },
+    "cordova-plugin-filechooser": {
+      "PACKAGE_NAME": "com.projectgp.gpconstruct"
+    },
+    "cordova-plugin-android-permissions": {
+      "PACKAGE_NAME": "com.projectgp.gpconstruct"
+    }
+  },
+  "dependent_plugins": {
+    "es6-promise-plugin": {
+      "PACKAGE_NAME": "com.projectgp.gpconstruct"
+    }
+  }
+}

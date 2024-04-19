@@ -1,0 +1,49 @@
+documentacion-page {
+    a {
+        text-decoration: none;
+        text-decoration-style: none;
+    }
+    ion-item:hover {
+        background-color: #CEE3F6;
+    }
+    ion-list {
+        padding-left: 10px !important;
+    }
+    .icons-basic-page {
+        ion-icon {
+            font-size: 50px;
+        }
+        ion-row {
+            flex-wrap: wrap;
+        }
+        ion-col {
+            flex: 0 0 50%;
+            max-width: 50%;
+            text-align: center;
+            padding: 10px 10px;
+        }
+        img {
+            width: 60px !important;
+            height: 85px !important;
+        }
+    }
+    div.documentos {
+        width: 100%;
+        background-color: white;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
+    }
+    /*div.documentos:hover {
+        background-color: #CEE3F6;
+    }*/
+    div.documentos img {
+        margin-left: 15px !important;
+        margin-top: 10px !important;
+        width: 90%;
+    }
+    div.descripcionDocto {
+        text-align: center;
+    }
+    div.descripcionDocto button {
+        margin-top: -15px !important;
+    }
+}

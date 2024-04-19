@@ -1,0 +1,23 @@
+fileBrowser-page {
+    a {
+        text-decoration: none;
+        text-decoration-style: none;
+    }
+    ion-item:hover {
+        background-color: #CEE3F6;
+    }
+    .icons-basic-page {
+        ion-icon {
+            font-size: 50px;
+        }
+        ion-row {
+            flex-wrap: wrap;
+        }
+        ion-col {
+            flex: 0 0 33%;
+            max-width: 33%;
+            text-align: center;
+            padding: 10px 5px;
+        }
+    }
+}

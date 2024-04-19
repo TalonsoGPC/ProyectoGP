@@ -1,0 +1,34 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+            {{tituloVivienda}}
+        </ion-title>
+        <ion-buttons end>
+                <button  *ngIf="DatosUsuario.boss == 1" ion-button large icon-right color="primary" (click)="irNotificaciones()"><ion-icon name="ios-home"></ion-icon></button>
+            <button ion-button large icon-right color="primary" (click)="menuBoss()"><ion-icon name="ios-menu"></ion-icon></button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<ion-content padding>
+    <ion-list *ngFor="let tema of listaTemas">
+        <a href="#" *ngIf="tema.ocultar == 1" (click)="getFiltro(tema)">
+            <ion-item text-wrap>
+                <ion-thumbnail item-left icon-rigth>
+                    <img src="assets/ve/{{tema.imagen}}">
+                </ion-thumbnail>
+                <h2>{{tema.descripcion}}</h2>
+            </ion-item>
+        </a>
+    </ion-list>
+</ion-content>
+<ion-footer no-border>
+    <ion-toolbar>
+        <ion-buttons start>
+            <button ion-button icon-only color="primary" (click)="getFiltro(null)"><ion-icon name="md-funnel"></ion-icon></button>
+            <button [ngStyle]="{'margin-left': '20px'}" ion-button icon-only color="danger" (click)="irAResumenDeVentas()"><ion-icon name="ios-stats"></ion-icon></button>
+        </ion-buttons>
+        <ion-buttons end *ngIf="DatosUsuario.admin == 1">
+            <button ion-button icon-only color="primary" (click)="navConfigurador()"><ion-icon name="ios-settings-outline"></ion-icon></button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-footer>

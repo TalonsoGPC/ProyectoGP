@@ -1,0 +1,83 @@
+alrecepciones-page {
+
+    .androidTitulo {
+        margin-top: 12px !important; 
+        margin-left: -6px !important;
+    }
+
+    ion-item {
+        margin-left: -25px !important;
+    }
+    ion-title {
+        background-color: #d433ff;
+    }
+    ion-buttons.bottomMarginToolIos button {
+        margin-left: 14px !important;
+    }
+
+    ion-buttons.bottomMarginToolAndroid button {
+        margin-left: 5px !important;
+    }
+
+    div.imagenes {
+        width: 100%;
+        background-color: white;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
+    }
+    div.imagenes:hover {
+        background-color: lightblue;
+    }
+    div.imagenes img {
+        margin-left: 15px !important;
+        margin-top: 10px !important;
+        width: 90%;
+    }
+    div.descripcionImagen {
+        text-align: center;
+        padding: 10px 20px;
+    }
+    div.descripcionImagen button {
+        margin-top: -15px !important;
+    }
+    ion-item.archivos {
+        margin-left: 3px !important;
+        width: 100%;
+        background-color: white;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
+    }
+    ion-item.archivos:hover {
+        background-color: lightblue;
+    }
+    ion-item.archivos img {
+        width: 64px;
+        height: 64px;
+    }
+    .botonTop {
+        margin-top: 1px !important;
+    }
+    
+    button {
+        background: blue;
+    }
+    ion-grid.margenAutorizacion {
+        margin-top: 10px !important;
+    }
+    .autMargen {
+        margin-top: 10px !important;
+    }
+    textarea {
+        resize: both;
+        height: 120px !important;
+    }
+    div.archivoVideo {
+        width: 100%;
+        background-color: white;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
+    }
+    div.archivoVideo video {
+        margin-top: 10px !important;
+    }
+    ion-item.archivoVideo:hover {
+        background-color: lightblue;
+    }
+}

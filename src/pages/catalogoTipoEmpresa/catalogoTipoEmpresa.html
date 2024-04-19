@@ -1,0 +1,21 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+            Tipos Empresa
+        </ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="irBoss()"><ion-icon name="ios-menu"></ion-icon></button>
+            <button ion-button clear icon-only item-left (click)="nuevoTipoEmpresa()"><ion-icon name="ios-create-outline"></ion-icon></button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <ion-list *ngFor="let tipo of listaTiposEmpresa; let indice = index" no-lines>
+        <a href="#" (click)="verTipoEmpresa(tipo)">
+            <ion-item text-wrap>
+                <ion-label>{{tipo.descripcion}}</ion-label>
+            </ion-item>
+        </a>
+    </ion-list>
+
+</ion-content>

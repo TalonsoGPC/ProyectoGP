@@ -1,0 +1,33 @@
+resumenDeVentas-page {
+    ion-item.tema-group {
+        margin-bottom: -55px !important;
+    }
+    .tituloResumenTotal {
+        margin-bottom: -35px !important;
+        margin-top: -60px !important;
+    }
+    .tituloResumen {
+        margin-bottom: -25px !important;
+    }
+    ion-thumbnail img {
+        width: 30px !important;
+        height: auto !important;
+        margin-left: 20px !important;
+        margin-top: 10px;
+    }
+    .tituloResumenTotal p {
+        font-size: 50px !important;
+    }
+    .tituloResumen p {
+        font-size: 20px !important;
+    }
+    .truncar {
+        text-align: left !important;
+        white-space: nowrap;
+        overflow: hidden;
+        color: #ffffff !important;
+    }
+    .endButtons {
+        margin-top: -10px !important;
+    }
+}

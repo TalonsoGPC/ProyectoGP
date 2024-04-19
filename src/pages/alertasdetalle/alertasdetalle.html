@@ -1,0 +1,321 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+            Alerta
+        </ion-title>
+        <ion-buttons end>
+            <button  *ngIf="DatosUsuario.boss == 1" ion-button large icon-right color="primary" (click)="irNotificaciones()"><ion-icon name="ios-home"></ion-icon></button>
+            <button ion-button large icon-right color="primary" (click)="menuBoss()"><ion-icon name="ios-menu"></ion-icon></button>
+        </ion-buttons>
+    </ion-navbar>
+    <ion-title *ngIf="alerta!=null && nuevoRegistro" [ngStyle]="{'background-color': color}">
+        <h5 ion-text color="light">{{titulo}}</h5>
+    </ion-title>
+    <ion-title *ngIf="alerta!=null && nuevoRegistro">
+        <ion-grid>
+            <ion-row>
+                <ion-col class="botonTop">
+                    <button ion-button ion-button block color="alertasColor" [disabled]="form.invalid" (click)="confirmarAlerta()" [ngStyle]="{'color': '#2E2E2E'}">Enviar Alerta</button>
+                </ion-col>
+                <!--ion-col class="botonTop">
+                    <button ion-button ion-button block clear color="danger" [disabled]="form.invalid" (click)="cancelarAlert()">Cancelar</button>
+                </ion-col-->
+            </ion-row>
+        </ion-grid>
+    </ion-title>
+</ion-header>
+<ion-content padding>
+    <ion-list>
+        <ion-icon icon-only style="position: absolute; left: 3px; margin-top: 10px; font-size: 40px;" name="md-alert" icon-left color="danger"></ion-icon>
+        <ion-item class="alertaMargen" item-left icon-left>
+            <!--h2 *ngFor="let ta of listasTiposAlertas" text-wrap>
+                <span *ngIf="alerta.tema==ta.tema && alerta.tipo==ta.tipo">
+                            <span *ngFor="let tm of listaTemas">
+                                    <span *ngIf="alerta.tema==tm.id">{{tm.descripcion}}</span>
+                </span>
+                <h2>{{ta.descripcion}}</h2>
+                </span>
+            </h2-->
+            <h2>{{alerta.nombre_tema}}</h2>
+            <h2>{{alerta.descripcion_alerta}}</h2>
+            <p ion-text color="danger" text-wrap> {{alerta.alerta}}</p>
+            <p text-wrap>
+                {{alerta.nota}}
+            </p>
+            <h6 *ngFor="let py of listaProyectos" text-wrap>
+                <p *ngIf="alerta.proyecto==py.numproy">{{py.nombre}}</p>
+            </h6>
+            <h6 *ngFor="let tm of listaTemas" text-wrap>
+                <p *ngIf="alerta.tema==tm.id">{{tm.descripcion}} No. {{alerta.numdocumento}}</p>
+            </h6>
+            <p *ngIf="alerta.enviadoPor != ''">Enviado por: {{alerta.enviadoPor}}</p>
+        </ion-item>
+    </ion-list>
+    <ion-list *ngIf="alerta!=null && nuevoRegistro">
+        <!--ion-title *ngIf="(alerta!=null && !nuevoRegistro)" [ngStyle]="{'background-color': colorRed}">
+            <h5 ion-text color="light">Alerta!</h5>
+        </ion-title-->
+        <div class="formaAlerta">
+            <form [formGroup]="form" novalidate>
+                <ion-grid>
+                    <ion-row>
+                        <ion-item>
+                            <ion-label floating>Tipo Alerta</ion-label>
+                            <ion-select formControlName="tipo" okText="Aceptar" cancelText="Cancelar" (ionChange)="obtenerPlantillaAlerta($event)">>
+                                <span *ngFor="let ta of listasTiposAlertas">
+                                <ion-option  *ngIf="ta.tema==alerta.tema" [value]="ta.tipo">{{ta.descripcion}}</ion-option>
+                            </span>
+                            </ion-select>
+                        </ion-item>
+                    </ion-row>
+                    <ion-row>
+                        <ion-item>
+                            <ion-label floating>Alerta</ion-label>
+                            <ion-textarea text-left formControlName="alerta"></ion-textarea>
+                        </ion-item>
+                    </ion-row>
+                    <!--ion-row>
+                        <ion-item>
+                            <ion-label floating>Proyecto</ion-label>
+                            <ion-select formControlName="proyecto" okText="Aceptar" cancelText="Cancelar">
+                                <ion-option *ngFor="let lp of listaProyectos" [value]="lp.numproy">{{lp.nombre}}</ion-option>
+                            </ion-select>
+                        </ion-item>
+                    </ion-row-->
+                    <!--ion-row>
+                        <ion-col>
+                            <ion-item>
+                                <ion-label floating>{{descripcion}}</ion-label>
+                                <ion-input type="number" formControlName="numdocumento"></ion-input>
+                            </ion-item>
+                        </ion-col>
+                    </ion-row-->
+                    <!--ion-row>
+                        <ion-item>
+                            <ion-label floating>Nota</ion-label>
+                            <ion-textarea text-left formControlName="nota"></ion-textarea>
+                        </ion-item>
+                    </ion-row-->
+                </ion-grid>
+            </form>
+        </div>
+    </ion-list>
+    <br>
+    <ion-list *ngIf="documento != null && documento != undefined">
+        <ion-title [ngStyle]="{'background-color': color}">
+            <h5 class="tituloDocto" ion-text color="light">{{titulo}}</h5>
+        </ion-title>
+        <div class="formaDocumento">
+            <form [formGroup]="formDocto" novalidate>
+                <ion-grid>
+                    <ion-row *ngIf="tema == 0">
+                        <ion-item>
+                            <ion-label floating [ngStyle]="{'color': color2}">Tema</ion-label>
+                            <ion-select formControlName="tema" okText="Aceptar" cancelText="Cancelar">
+                                <ion-option *ngFor="let tm of listaTemas" [value]="tm.id">{{tm.nombre}}</ion-option>
+                            </ion-select>
+                        </ion-item>
+                    </ion-row>
+                    <ion-row *ngIf="tema == 19">
+                        <ion-item class="form-group">
+                            <ion-label floating [ngStyle]="{'color': color2}">Tarea</ion-label>
+                            <ion-select formControlName="tarea" okText="Aceptar" cancelText="Cancelar">
+                                <ion-option *ngFor="let tarea of listaTareas" [value]="tarea.id">{{tarea.descripcion}}</ion-option>
+                            </ion-select>
+                        </ion-item>
+                    </ion-row>
+                    <ion-row>
+                        <ion-item class="form-group">
+                            <ion-label floating [ngStyle]="{'color': color2}">Proyecto</ion-label>
+                            <ion-select formControlName="numproy" okText="Aceptar" cancelText="Cancelar" (ionChange)="imprimirParametro($event)">
+                                <ion-option *ngFor="let proy of listaProyectos" [value]="proy.numproy">{{proy.nombre}}</ion-option>
+                            </ion-select>
+                        </ion-item>
+                    </ion-row>
+                    <ion-row>
+                        <ion-item class="form-group">
+                            <ion-label floating [ngStyle]="{'color': color2}">No. Documento</ion-label>
+                            <ion-input type="number" formControlName="numdocumento" (change)="validarDocumento($event.target.value)"></ion-input>
+                        </ion-item>
+                    </ion-row>
+                    <ion-row>
+                        <ion-item>
+                            <ion-label floating [ngStyle]="{'color': color2}">{{razonSocial}}</ion-label>
+                            <ion-select formControlName="cliente" okText="Aceptar" cancelText="Cancelar">
+                                <ion-option *ngFor="let pv of listaProveedores" [value]="pv.id">{{pv.nombre}}</ion-option>
+                            </ion-select>
+                        </ion-item>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col>
+                            <ion-item>
+                                <ion-label floating [ngStyle]="{'color': color2}">Fecha</ion-label>
+                                <ion-datetime text-left displayFormat="DD/MM/YYYY" formControlName="fecha_elab"></ion-datetime>
+                            </ion-item>
+                        </ion-col>
+                        <ion-col>
+                            <ion-item>
+                                <ion-label floating [ngStyle]="{'color': color2}">Semana</ion-label>
+                                <ion-input type="number" formControlName="semana"></ion-input>
+                            </ion-item>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-item>
+                            <ion-label floating [ngStyle]="{'color': color2}">Responsable</ion-label>
+                            <ion-select formControlName="responsable" okText="Aceptar" cancelText="Cancelar">
+                                <ion-option *ngFor="let rp of listaResponsables" [value]="rp.id">{{rp.nombre}}</ion-option>
+                            </ion-select>
+                        </ion-item>
+                    </ion-row>
+                    <ion-row>
+                        <ion-item>
+                            <ion-label floating [ngStyle]="{'color': color2}">Monto</ion-label>
+                            <ion-input type="text" formControlName="monto"></ion-input>
+                        </ion-item>
+                    </ion-row>
+                    <ion-row>
+                        <ion-item>
+                            <ion-label floating [ngStyle]="{'color': color2}">Estatus</ion-label>
+                            <ion-select formControlName="estatus" okText="Aceptar" cancelText="Cancelar">
+                                <ion-option *ngFor="let st of listaEstatus" [value]="st.id">{{st.nombre}}</ion-option>
+                            </ion-select>
+                        </ion-item>
+                    </ion-row>
+                    <ion-row>
+                        <ion-item>
+                            <ion-label floating [ngStyle]="{'color': color2}">{{tituloAut}}</ion-label>
+                            <ion-select formControlName="autorizado_por" okText="Aceptar" cancelText="Cancelar">
+                                <ion-option *ngFor="let usr of listaUsuarios" [value]="usr.id">{{usr.nombre}}</ion-option>
+                            </ion-select>
+                        </ion-item>
+                    </ion-row>
+                    <ion-row *ngIf="estatus==2">
+                        <ion-item>
+                            <ion-label floating [ngStyle]="{'color': color2}">Fecha Autorización</ion-label>
+                            <ion-datetime text-left displayFormat="DD/MM/YYYY" formControlName="fecha_aut"></ion-datetime>
+                        </ion-item>
+                    </ion-row>
+                    <ion-row>
+                        <ion-item>
+                            <ion-label floating [ngStyle]="{'color': color2}">Nota</ion-label>
+                            <ion-textarea text-left formControlName="nota"></ion-textarea>
+                        </ion-item>
+                    </ion-row>
+                </ion-grid>
+            </form>
+        </div>
+    </ion-list>
+    <!--ion-list no-lines *ngFor="let archivo of listaArchivosAlertas">
+        <div *ngIf="archivo.formato == 'jpg'" class="imagenes">
+            <img src="http://142.4.197.18:8000/archivos/{{archivo.nombre}}" alt="">
+            <div class="descripcionImagen">
+                <ion-row>
+                    <ion-col>
+                        {{archivo.nombreOriginal}}
+                    </ion-col>
+                    <ion-col>
+                        <ion-buttons end>
+                            <button ion-button icon-only clear (click)="imageFullSize('http://142.4.197.18:8000/archivos/', archivo)"><ion-icon name="ios-image-outline"></ion-icon></button>
+                            <button ion-button icon-only clear (click)="borrarArchivo(archivo)"><ion-icon name="ios-trash-outline"></ion-icon></button>
+                        </ion-buttons>
+                    </ion-col>
+                </ion-row>
+            </div>
+        </div>
+    </ion-list-->
+    <!--ion-list *ngFor="let archivo of listaArchivosAlertas" no-lines>
+        <div *ngIf="archivo.formato != 'jpg'">
+            <ion-item class="archivos" (click)="downloadFile(archivo)">
+                <ion-thumbnail item-left>
+                    <img *ngIf="archivo.formato == 'xlsx' || archivo.formato == 'xls'" src="assets/img/excelIcono.png">
+                    <img *ngIf="archivo.formato == 'pdf'" src="assets/img/pdfIcono.png">
+                    <img *ngIf="archivo.formato == 'docx' || archivo.formato == 'doc'" src="assets/img/wordIcono.png">
+                    <img *ngIf="archivo.formato == 'dwg'" src="assets/img/autocadIcono.png">
+                </ion-thumbnail>
+                {{archivo.nombreOriginal}}
+            </ion-item>
+        </div>
+    </ion-list-->
+    <ion-list no-lines *ngFor="let archivo of listaArchivosMensajes">
+        <div *ngIf="archivo.formato == 'jpg'" class="imagenes">
+            <img [src]="returnPathFile('http://142.4.197.18:8000/', archivo.nombre)" alt="" (click)="imageFullSize('http://142.4.197.18:8000/archivos/', archivo)">
+            <div class="descripcionImagen">
+                <ion-row>
+                    <ion-col>
+                        {{archivo.nombreOriginal}}
+                    </ion-col>
+                    <ion-col>
+                        <ion-buttons end>
+                            <!--button ion-button icon-only clear (click)="imageFullSize('http://142.4.197.18:8000/archivos/', archivo)"><ion-icon name="ios-image-outline"></ion-icon></button-->
+                            <button ion-button icon-only clear (click)="borrarArchivo(archivo)"><ion-icon name="ios-trash-outline"></ion-icon></button>
+                        </ion-buttons>
+                    </ion-col>
+                </ion-row>
+            </div>
+        </div>
+    </ion-list>
+    <ion-list *ngFor="let archivo of listaArchivosMensajes" no-lines>
+        <div *ngIf="archivo.formato != 'jpg' && archivo.formato != 'mp4' && archivo.formato != '3gp'">
+            <ion-item class="archivos" (click)="accionArchivos(archivo)">
+                <ion-thumbnail item-left>
+                    <img *ngIf="archivo.formato == 'xlsx' || archivo.formato == 'xls'" src="assets/img/excelIcono.png">
+                    <img *ngIf="archivo.formato == 'pdf'" src="assets/img/pdfIcono.png">
+                    <img *ngIf="archivo.formato == 'docx' || archivo.formato == 'doc'" src="assets/img/wordIcono.png">
+                    <img *ngIf="archivo.formato == 'dwg'" src="assets/img/autocadIcono.png">
+                </ion-thumbnail>
+                {{archivo.nombreOriginal}}
+            </ion-item>
+        </div>
+    </ion-list>
+    <ion-list *ngFor="let archivo of listaArchivosMensajes" no-lines>
+        <div *ngIf="archivo.formato == 'mp4'" class="archivoVideo">
+            <video width="100%" controls>
+                <source [src]="returnPathFile('http://142.4.197.18:8000/', archivo.nombre)" type="video/mp4">
+            </video>
+            <div class="descripcionImagen">
+                <ion-row>
+                    <ion-col>
+                        {{archivo.nombreOriginal}}
+                    </ion-col>
+                    <ion-col>
+                        <ion-buttons end>
+                            <button ion-button icon-only clear (click)="borrarArchivo(archivo)"><ion-icon name="ios-trash-outline"></ion-icon></button>
+                        </ion-buttons>
+                    </ion-col>
+                </ion-row>
+            </div>
+        </div>
+    </ion-list>
+    <ion-list *ngFor="let archivo of listaArchivosMensajes" no-lines>
+        <div *ngIf="archivo.formato == '3gp'" class="archivoVideo">
+            <audio controls>
+                <source [src]="returnPathFile('http://142.4.197.18:8000/', archivo.nombre)" type="audio/3gp">
+            </audio>
+            <div class="descripcionImagen">
+                <ion-row>
+                    <ion-col>
+                        {{archivo.nombreOriginal}}
+                    </ion-col>
+                    <ion-col>
+                        <ion-buttons end>
+                            <button ion-button icon-only clear (click)="borrarArchivo(archivo)"><ion-icon name="ios-trash-outline"></ion-icon></button>
+                        </ion-buttons>
+                    </ion-col>
+                </ion-row>
+            </div>
+        </div>
+    </ion-list>
+</ion-content>
+<ion-footer>
+    <ion-toolbar>
+        <!--ion-buttons start>
+            <button ion-button icon-only color="primary"><ion-icon name="ios-add-circle-outline"></ion-icon></button>
+        </ion-buttons-->
+        <!--ion-input type="text" value="Mensajes" text-wrap></ion-input-->
+        <ion-buttons end>
+            <!--button ion-button icon-only color="primary"><ion-icon name="ios-camera-outline"></ion-icon></button-->
+            <button ion-button icon-only color="primary" (click)="borrarAlerta()"><ion-icon name="ios-trash-outline"></ion-icon></button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-footer>

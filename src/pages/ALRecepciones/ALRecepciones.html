@@ -1,0 +1,32 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+            Almacen
+        </ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content padding>
+    <form [formGroup]="formEnc" novalidate>
+        <ion-grid>
+                <ion-row>
+                    <ion-item class="form-group">
+                        <ion-label floating [ngStyle]="{'color': color2}">Proyecto</ion-label>
+                        <ion-select formControlName="proyecto" okText="Aceptar" cancelText="Cancelar">
+                            <ion-option *ngFor="let proy of listaProyectos" [value]="proy.numproy">{{proy.nombre}}</ion-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-row>
+                <ion-row>
+                    <ion-item class="form-group">
+                        <ion-label floating [ngStyle]="{'color': color2}">WBS</ion-label>
+                        <ion-select formControlName="wbs" okText="Aceptar" cancelText="Cancelar">
+                            <ion-option *ngFor="let proy of listaProyectos" [value]="proy.numproy">{{proy.nombre}}</ion-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-row>
+        </ion-grid>
+
+    </form>
+
+</ion-content>
+

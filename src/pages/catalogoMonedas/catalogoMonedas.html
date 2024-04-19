@@ -1,0 +1,18 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+            Monedas
+        </ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="irBoss()"><ion-icon name="ios-menu"></ion-icon></button>
+            <button ion-button clear icon-only item-left (click)="nuevaMoneda()"><ion-icon name="ios-create-outline"></ion-icon></button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <ion-list *ngFor="let moneda of listaMonedas" no-lines>
+        <ion-item text-wrap>
+            <ion-label (click)="verMoneda(moneda)">{{moneda.id}} - {{moneda.descripcion}}</ion-label>
+        </ion-item>
+    </ion-list>
+</ion-content>

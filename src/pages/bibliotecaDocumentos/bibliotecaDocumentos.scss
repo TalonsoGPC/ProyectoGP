@@ -1,0 +1,32 @@
+bibliotecaDocumentos-page {
+    a {
+        text-decoration: none;
+        text-decoration-style: none;
+    }
+    ion-item:hover {
+        background-color: #CEE3F6;
+    }
+    .icons-basic-page {
+        ion-row {
+            flex-wrap: wrap;
+        }
+        ion-col {
+            width: 100%;
+            background-color: white;
+            box-shadow: 0 5px 9px 0 rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
+            flex: 0 0 33%;
+            max-width: 33%;
+            text-align: center;
+            font-size: 12px !important;
+            padding: 20px 10px;
+        }
+        ion-col:hover {
+            background-color: #CEE3F6;
+        }
+        ion-checkbox {
+            position: absolute !important;
+            bottom: 1% !important;
+            margin-left: -10px !important;
+        }
+    }
+}

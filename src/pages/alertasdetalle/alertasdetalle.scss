@@ -1,0 +1,61 @@
+alertasdetalle-page {
+    .tarjeta p {
+        line-height: 20px;
+    }
+    div.imagenes {
+        width: 100%;
+        background-color: white;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
+    }
+    div.imagenes:hover {
+        background-color: lightblue;
+    }
+    div.imagenes img {
+        margin-left: 15px !important;
+        margin-top: 10px !important;
+        width: 90%;
+    }
+    div.descripcionImagen {
+        text-align: center;
+        padding: 10px 20px;
+    }
+    div.descripcionImagen button {
+        margin-top: -15px !important;
+    }
+    ion-item.archivos {
+        margin-left: 3px !important;
+        width: 100%;
+        background-color: white;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
+    }
+    ion-item.archivos:hover {
+        background-color: lightblue;
+    }
+    ion-item.archivos img {
+        width: 64px;
+        height: 64px;
+    }
+    .formaDocumento {
+        border: 1px solid lightblue;
+    }
+    .formaAlerta {
+        border: 1px solid lightcoral;
+    }
+    .botonTop {
+        margin-top: 1px !important;
+    }
+    div.boxAlerta {
+        background-color: silver;
+    }
+    ion-item.alertaMargen {
+        height: auto !important;
+        margin-left: 20px !important;
+    }
+    .tituloDocto {
+        margin-top: 10px !important;
+    }
+    textarea {
+        resize: both;
+        height: 120px !important;
+    }
+}

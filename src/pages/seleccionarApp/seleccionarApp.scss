@@ -1,0 +1,19 @@
+seleccionarApp-page {
+    ion-list {
+        margin-top: 10% !important;
+        margin-bottom: 10% !important;
+    }
+    ion-thumbnail {
+        margin-left: -10px !important;
+    }
+    ion-checkbox {
+        margin-left: -10px !important;
+    }
+    ion-row {
+        margin-bottom: 1px !important;
+    }
+    ion-thumbnail img {
+        width: 50px !important;
+        height: auto !important;
+    }
+}

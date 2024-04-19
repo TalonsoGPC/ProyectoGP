@@ -1,0 +1,92 @@
+<ion-header>
+    <ion-navbar>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="irControlObra()"><ion-icon name="ios-menu"></ion-icon></button>
+        </ion-buttons>
+    </ion-navbar>
+    <ion-title [ngStyle]="{'background-color': color}">
+        <ion-grid>
+            <ion-row>
+                <ion-col col-3 class="botonTop">
+                    <button ion-button block clear [disabled]="form.invalid" (click)="guardarTarea()" color="textoEdicion">{{opcionBoton}}</button>
+                </ion-col>
+                <ion-col col-6>
+                    <h5 ion-text color="light">Tareas</h5>
+                </ion-col>
+                <ion-col col-3 class="botonTop">
+                    <button ion-button block clear [disabled]="form.invalid" (click)="borrarTarea()" color="textoEdicion">{{opcionBoton2}}</button>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-title>
+</ion-header>
+<ion-content>
+    <ion-list>
+        <form [formGroup]="form" (ngSubmit)="guardarTarea()" novalidate>
+            <ion-grid>
+                <ion-row>
+                    <ion-item>
+                        <ion-label floating>Tema</ion-label>
+                        <ion-select formControlName="tema" okText="Aceptar" cancelText="Cancelar">
+                            <ion-option *ngFor="let tema of listaTemas" [value]="tema.id">{{tema.nombre}}</ion-option>
+                        </ion-select>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label floating>Tarea</ion-label>
+                        <ion-input type="text" formControlName="descripcion"></ion-input>
+                    </ion-item>
+                </ion-row>
+                <ion-row>
+                    <ion-item>
+                        <ion-label floating>Tipo Empresa</ion-label>
+                        <ion-select formControlName="tipo_empresa" okText="Aceptar" cancelText="Cancelar">
+                            <ion-option *ngFor="let tipo of listaTiposEmpresa" [value]="tipo.tipo">{{tipo.descripcion}}</ion-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-row>
+            </ion-grid>
+        </form>
+        <ion-grid>
+            <ion-row>
+                <ion-item>
+                    <ion-title>Habilitar Datos</ion-title>
+                </ion-item>
+            </ion-row>
+            <!--ion-row>
+                <ion-item>
+                    <ion-label>Semana</ion-label>
+                    <ion-toggle *ngIf="campo_semana==0" value="campo_semana" checked="false" color="primary" (ionChange)="actualizarDatos($event, 1, 1)"></ion-toggle>
+                    <ion-toggle *ngIf="campo_semana==1" value="campo_semana" checked="true" color="primary" (ionChange)="actualizarDatos($event, 1, 0)"></ion-toggle>
+                </ion-item>
+            </ion-row-->
+            <ion-row>
+                <ion-item>
+                    <ion-label>Rázon Social</ion-label>
+                    <ion-toggle *ngIf="campo_razonsocial==0" value="campo_razonsocial" checked="false" color="primary" (ionChange)="actualizarDatos($event, 2, 1)"></ion-toggle>
+                    <ion-toggle *ngIf="campo_razonsocial==1" value="campo_razonsocial" checked="true" color="primary" (ionChange)="actualizarDatos($event, 2, 0)"></ion-toggle>
+                </ion-item>
+            </ion-row>
+            <ion-row>
+                <ion-item>
+                    <ion-label>Monto</ion-label>
+                    <ion-toggle *ngIf="campo_monto==0" value="campo_monto" checked="false" color="primary" (ionChange)="actualizarDatos($event, 3, 1)"></ion-toggle>
+                    <ion-toggle *ngIf="campo_monto==1" value="campo_monto" checked="true" color="primary" (ionChange)="actualizarDatos($event, 3, 0)"></ion-toggle>
+                </ion-item>
+            </ion-row>
+            <ion-row>
+                <ion-item>
+                    <ion-label>Afectar Costo</ion-label>
+                    <ion-toggle *ngIf="costo==0" value="costo" checked="false" color="primary" (ionChange)="actualizarDatos($event, 99, 1)"></ion-toggle>
+                    <ion-toggle *ngIf="costo==1" value="costo" checked="true" color="primary" (ionChange)="actualizarDatos($event, 99, 0)"></ion-toggle>
+                </ion-item>
+            </ion-row>
+        </ion-grid>
+    </ion-list>
+</ion-content>
+<ion-footer>
+    <ion-toolbar>
+        <ion-buttons end>
+            <button ion-button icon-only icon-right color="primary" (click)="generarNuevo()"><ion-icon name="ios-create-outline"></ion-icon></button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-footer>

@@ -1,0 +1,19 @@
+<ion-header>
+    <ion-navbar>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="irBoss()"><ion-icon name="ios-menu"></ion-icon></button>
+            <button ion-button clear icon-only item-left (click)="nuevoProyecto()"><ion-icon name="ios-create-outline"></ion-icon></button>
+        </ion-buttons>
+    </ion-navbar>
+    <ion-title [ngStyle]="{'background-color': objeto.color}">
+        <h5 ion-text color="light">{{objeto.title}}</h5>
+    </ion-title>
+
+</ion-header>
+<ion-content>
+    <ion-list *ngFor="let item of listaProyectos" lines>
+        <ion-item (click)="verProyecto(item)">
+            <p>{{item.nombre}}</p>
+        </ion-item>
+    </ion-list>
+</ion-content>

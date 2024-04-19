@@ -1,0 +1,25 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+            Tipos Alertas
+        </ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="irBoss()"><ion-icon name="ios-menu"></ion-icon></button>
+            <button ion-button clear icon-only item-left (click)="nuevoTipo()"><ion-icon name="ios-create-outline"></ion-icon></button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <ion-list *ngFor="let tipo of listaTipos">
+        <ion-item text-wrap>
+            <ion-thumbnail item-left icon-rigth>
+                <div *ngFor="let tema of listaTemas">
+                    <img *ngIf=" tema.id == tipo.tema" src="assets/co/{{tema.imagen}}">
+                </div>
+            </ion-thumbnail>
+            <ion-label (click)="verTipo(tipo)">{{ tipo.descripcion}}</ion-label>
+            <ion-toggle *ngIf="tipo.ocultar==1" value="tipo.ocultar" checked="true" color="primary" (ionChange)="habilitarTipoAlerta($event, tarea)"></ion-toggle>
+            <ion-toggle *ngIf="tipo.ocultar==0" value="tipo.ocultar" checked="false" color="primary" (ionChange)="habilitarTipoAlerta($event, tarea)"></ion-toggle>
+        </ion-item>
+    </ion-list>
+</ion-content>

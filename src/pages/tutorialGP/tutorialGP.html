@@ -1,0 +1,23 @@
+<ion-header>
+</ion-header>
+<ion-content>
+    <div class="formGroup">
+        <ion-grid>
+            <ion-row>
+                <h1 ion-text [ngStyle]="{'color': 'white', 'text-align': 'center'}">
+                    Antes de registrarte, ¿Quieres conocer a Project GP?
+                </h1>
+            </ion-row>
+        </ion-grid>
+        <ion-grid class="videoGP">
+            <ion-row>
+                <ion-icon (click)="verVideo()" icon-only style="margin-top: -20%; margin-left: 30%; position:absolute; font-size: 800%;" name="logo-youtube" icon-left color="ambar"></ion-icon>
+            </ion-row>
+        </ion-grid>
+        <ion-grid>
+            <ion-row>
+                <button round ion-button block clear color="light" (click)="RegistroPerfilPage()"><p [ngStyle]="{'font-size':'30px'}">Continuar</p></button>
+            </ion-row>
+        </ion-grid>
+    </div>
+</ion-content>

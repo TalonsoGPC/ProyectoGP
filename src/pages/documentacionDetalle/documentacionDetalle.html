@@ -1,0 +1,42 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+            Documentos
+        </ion-title>
+        <div class="toolbarTopReq">
+            <ion-buttons end>
+                    <button  *ngIf="DatosUsuario.boss == 1" ion-button large icon-right color="primary" (click)="irNotificaciones()"><ion-icon name="ios-home"></ion-icon></button>
+                <button ion-button large icon-right color="primary" (click)="menuBoss()"><ion-icon name="ios-menu"></ion-icon></button>
+            </ion-buttons>
+        </div>
+    </ion-navbar>
+</ion-header>
+<ion-content text-center class="icons-basic-page">
+    <ion-row>
+        <ion-col *ngFor="let item of listaArchivos">
+            <button *ngIf="item.formato=='jpg'" (click)="ampliarImagen('http://142.4.197.18:8000/archivos/', item)">
+                <img [src]="returnPathFile('http://142.4.197.18:8000/', item.nombre)">
+            </button>
+            <a *ngIf="item.formato=='pdf' && DatosUsuario.so=='ios'" href="#" (click)="accionArchivos(item)">
+                <img [src]="returnPathFile('http://142.4.197.18:8000/', item.nombre)" alt="">
+            </a>
+            <a *ngIf="item.formato=='pdf' && DatosUsuario.so=='android'" href="#" (click)="accionArchivos(item)">
+                <ion-thumbnail item-left>
+                    <img src="assets/img/pdfIcono.png">
+                </ion-thumbnail>
+                {{item.nombre}}
+            </a>
+            <a *ngIf="item.formato!='jpg' && item.formato!='pdf' && item.formato!='mp4'" (click)="accionArchivos(item)">
+                <img *ngIf="item.formato == 'xlsx' || item.formato == 'xls'" src="assets/img/excelIcono.png">
+                <img *ngIf="item.formato == 'docx' || item.formato == 'doc'" src="assets/img/wordIcono.png">
+                <img *ngIf="item.formato == 'dwg'" src="assets/img/autocadIcono.png">
+                <ion-title>{{item.nombre}}</ion-title>
+            </a>
+            <a *ngIf="item.formato=='mp4'" href="#">
+                <video width="100%" controls>
+                    <source [src]="returnPathFile('http://142.4.197.18:8000/', item.nombre)"  type="video/mp4">
+                </video>
+            </a>
+        </ion-col>
+    </ion-row>
+</ion-content>

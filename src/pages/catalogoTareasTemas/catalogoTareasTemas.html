@@ -1,0 +1,20 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+            Temas - Tareas
+        </ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="irBoss()"><ion-icon name="ios-menu"></ion-icon></button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <ion-list *ngFor="let tema of listaTemas">
+        <ion-item text-wrap (click)="verTarea(tema)">
+            <ion-thumbnail item-left icon-rigth>
+                <img src="assets/co/{{tema.imagen}}">
+            </ion-thumbnail>
+            <ion-label>{{tema.nombre}}</ion-label>
+        </ion-item>
+    </ion-list>
+</ion-content>

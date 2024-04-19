@@ -1,0 +1,67 @@
+<ion-header>
+    <ion-navbar>
+        <ion-buttons end *ngIf="parametro != 2">
+            <button ion-button clear (click)="onMenu()">Siguiente<ion-icon icon-only style="font-size: 33px;" name="ios-arrow-forward"></ion-icon></button>
+        </ion-buttons>
+        <ion-buttons end *ngIf="parametro == 2">
+            <button ion-button clear (click)="onMenu2()">Guardar</button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <ion-title>
+        <h1 text-wrap [ngStyle]="{'text-align': 'center', 'color': '#488aff', 'margin-left':'10px'}">Seleccione las opciones <br>que necesita</h1>
+    </ion-title>
+    <ion-list no-lines>
+        <ion-row *ngIf="parametro == 2">
+            <ion-item>
+                <ion-checkbox [(ngModel)]="administrador" (ionChange)="ionChangeMenuAdmin($event)"></ion-checkbox>
+                <!--ion-title>Administrador</ion-title-->
+                <ion-label text-wrap item-end><span [ngStyle]="{'font-weight': 'bold'}">Administrador</span></ion-label>
+            </ion-item>
+        </ion-row>
+        <ion-row>
+            <ion-item>
+                <ion-checkbox [(ngModel)]="menuBoss" (ionChange)="ionChangeMenuBoss($event)"></ion-checkbox>
+                <ion-thumbnail item-left>
+                    <img src="assets/img/boss.png">
+                </ion-thumbnail>
+                <ion-label text-wrap item-end>
+                    <span [ngStyle]="{'font-weight': 'bold'}">App Boss</span><br>Para propietarios y ejecutivos de empresas</ion-label>
+            </ion-item>
+        </ion-row>
+        <ion-row>
+            <ion-item>
+                <ion-checkbox [(ngModel)]="menuProyectos" (ionChange)="ionChangeMenuProyectos($event)"></ion-checkbox>
+                <ion-thumbnail item-left>
+                    <img src="assets/img/obras.png">
+                </ion-thumbnail>
+                <ion-title>Proyectos</ion-title>
+                <ion-label text-wrap item-end>
+                    <span [ngStyle]="{'font-weight': 'bold'}">App Proyectos</span><br>Para supervisores de obra y gerencia de proyectos</ion-label>
+            </ion-item>
+        </ion-row>
+        <ion-row>
+            <ion-item>
+                <ion-checkbox [(ngModel)]="menuVentas" (ionChange)="ionChangeMenuVentas($event)"></ion-checkbox>
+                <ion-thumbnail item-left>
+                    <img src="assets/img/ventas.png">
+                </ion-thumbnail>
+                <ion-title>Vivienda</ion-title>
+                <ion-label text-wrap item-end>
+                    <span [ngStyle]="{'font-weight': 'bold'}">App Vivienda</span><br>Para comercialización de vivienda.</ion-label>
+            </ion-item>
+        </ion-row>
+        <ion-row>
+            <ion-item>
+                <ion-checkbox [(ngModel)]="menuInmuebles" (ionChange)="ionChangeMenuInmuebles($event)"></ion-checkbox>
+                <ion-thumbnail item-left>
+                    <img src="assets/img/inmuebles.png">
+                </ion-thumbnail>
+                <ion-title>Inmuebles</ion-title>
+                <ion-label text-wrap item-end>
+                    <span [ngStyle]="{'font-weight': 'bold'}">App Inmuebles</span><br>Para asesores y administración de inmuebles.</ion-label>
+            </ion-item>
+        </ion-row>
+    </ion-list>
+</ion-content>

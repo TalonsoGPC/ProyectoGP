@@ -1,0 +1,13 @@
+{
+    "MediaPlayer.framework": 1,
+    "ImageIO.framework": 2,
+    "CoreLocation.framework": 1,
+    "AVFoundation.framework": 1,
+    "libz.tbd": 2,
+    "UIKit.framework": 1,
+    "Foundation.framework": 1,
+    "QuartzCore.framework": 1,
+    "MessageUI.framework": 2,
+    "WebKit.framework": 1,
+    "Social.framework": 1
+}

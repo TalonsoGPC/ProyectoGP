@@ -1,0 +1,55 @@
+<ion-header no-border>
+    <ion-navbar>
+        <div class="toolbarTopReq">
+            <ion-toolbar>
+                <ion-buttons start>
+                        <button  *ngIf="DatosUsuario.boss == 1" ion-button large icon-right color="primary" (click)="irNotificaciones()"><ion-icon name="ios-home"></ion-icon></button>
+                    <button ion-button large icon-right color="primary" (click)="menuControlObra()"><ion-icon name="ios-menu"></ion-icon></button>
+                </ion-buttons>
+                <ion-buttons end>
+                    <button ion-button large icon-right color="primary" (click)="verAlertas()"><ion-icon name="ios-alert-outline"></ion-icon></button>
+                    <button ion-button large icon-right color="primary" (click)="verPorAut()"><ion-icon name="ios-checkmark-circle-outline"></ion-icon></button>
+                    <button ion-button large icon-right color="primary" (click)="irReportesBoss()"><ion-icon name="ios-paper-outline"></ion-icon></button>
+                    <button ion-button large icon-right color="primary" (click)="irDocumentos()"><ion-icon name="ios-folder-open-outline"></ion-icon></button>
+                </ion-buttons>
+            </ion-toolbar>
+        </div>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-list *ngFor="let item of listado">
+        <div>
+            <a href="#" (click)="navRecepcion(item)">
+                <ion-item item-left icon-left>
+                    <h2 text-wrap>
+                        <p>Recep: No.{{item.numrecepcion}} Acuse: No.{{item.num_acuse}}</p>
+                    </h2>
+                    <h3>
+                        <p text-wrap>{{item.nombre}}</p>
+                    </h3>
+                    <p *ngIf="item.monto!=null">Monto $<span data-format="#.000">{{item.monto | number}}</span> {{item.moneda}} </p>
+                    <p *ngIf="item.notas!=null" text-wrap>{{item.notas}}</p>
+                    <img *ngIf="item.nombre_archivo!=null " [src]="returnPathFile('http://142.4.197.18:8000/', item.nombre_archivo)" alt="">
+                    <ion-note item-right>
+                        {{item.fecha_recepcion | date: 'dd/MM'}}
+                    </ion-note>
+                    <ion-icon class="flechaNext" name="ios-arrow-forward" icon-rigth></ion-icon>
+                </ion-item>
+            </a>
+        </div>
+    </ion-list>
+</ion-content>
+<ion-footer no-border>
+    <ion-toolbar>
+        <ion-buttons start>
+            <button ion-button icon-only color="primary" (click)="getFiltro()"><ion-icon name="md-funnel"></ion-icon></button>
+        </ion-buttons>
+        <ion-title>
+            Recepciones
+        </ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only color="primary" (click)="generarNuevo()"><ion-icon name="ios-create-outline"></ion-icon></button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-footer>

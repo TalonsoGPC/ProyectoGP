@@ -1,0 +1,36 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+            Control de proyectos
+        </ion-title>
+        <ion-buttons end>
+                <button  *ngIf="DatosUsuario.boss == 1" ion-button large icon-right color="primary" (click)="irNotificaciones()"><ion-icon name="ios-home"></ion-icon></button>
+            <button ion-button large icon-right color="primary" (click)="menuBoss()"><ion-icon name="ios-menu"></ion-icon></button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<ion-content padding>
+    <ion-list *ngFor="let tema of listaTemas">
+        <a href="#" *ngIf="tema.ocultar == 1" (click)="getFiltro(tema.id)">
+            <ion-item text-wrap>
+                <ion-thumbnail item-left icon-rigth>
+                    <img src="assets/co/{{tema.imagen}}">
+                </ion-thumbnail>
+                <h2>{{tema.nombre}}</h2>
+                <!--ion-badge color="primary" *ngIf="tema.notificacion > 0" item-right>{{tema.notificacion}}</ion-badge-->
+                <!--p>{{tema.descripcion}}</p-->
+            </ion-item>
+        </a>
+    </ion-list>
+</ion-content>
+<ion-footer no-border>
+    <ion-toolbar>
+        <ion-buttons start>
+            <button ion-button icon-only color="primary" (click)="getFiltro(0)"><ion-icon name="md-funnel"></ion-icon></button>
+            <button [ngStyle]="{'margin-left': '20px'}" ion-button icon-only color="danger" (click)="irAResumenDeProyectos()"><ion-icon name="ios-stats"></ion-icon></button>
+        </ion-buttons>
+        <ion-buttons end *ngIf="DatosUsuario.admin == 1">
+            <button ion-button icon-only color="primary" (click)="navConfigurador()"><ion-icon name="ios-settings-outline"></ion-icon></button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-footer>

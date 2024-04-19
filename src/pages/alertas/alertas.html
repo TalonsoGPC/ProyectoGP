@@ -1,0 +1,68 @@
+<ion-header no-border>
+    <ion-navbar>
+        <ion-title>
+            Alertas
+        </ion-title>
+        <ion-buttons end>
+            <button  *ngIf="DatosUsuario.boss == 1" ion-button large icon-right color="primary" (click)="irNotificaciones()"><ion-icon name="ios-home"></ion-icon></button>
+            <button ion-button large icon-right color="primary" (click)="menuBoss()"><ion-icon name="ios-menu"></ion-icon></button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-list *ngFor="let item of ListaAlertas">
+        <div *ngIf="item.ocultar==1">
+            <div *ngIf="item.notificado != null">
+                <span *ngIf="item.archivo > 0">
+                <span>
+                     <ion-icon icon-only *ngIf="item.notificado == 1" style=" position: absolute; left: 2px; margin-top: 30px;" name="md-alert" icon-left color="danger"></ion-icon>
+                     <ion-icon icon-only *ngIf="item.notificado == 0" style=" position: absolute; left: 2px; margin-top: 30px;" name="ios-alert-outline" icon-left color="danger"></ion-icon>
+                </span>
+                </span>
+                <span *ngIf="item.archivo < 1">
+                 <ion-icon *ngIf="item.notificado == 1" style=" position: absolute; left: 2px; margin-top: 10px;" name="md-alert" icon-left color="danger"></ion-icon>
+                 <ion-icon *ngIf="item.notificado == 0" style=" position: absolute; left: 2px; margin-top: 10px;" name="ios-alert-outline" icon-left color="danger"></ion-icon>
+            </span>
+            </div>
+            <div *ngIf="item.archivo > 0 ">
+                <span *ngIf="item.notificado != null">
+                <br>
+                <ion-icon style="position: absolute; left: 5px; margin-top: 30px;" name="ios-attach" icon-left color="dark"></ion-icon>
+            </span>
+            </div>
+            <a href="#" (click)="navAlerta(item)">
+                <ion-item item-left icon-left>
+                    <!--span *ngIf="item.gp==1"><img class="iconoGP" src="assets/img/gpIcono.png" style="width: 15px;  height: 15px;">&nbsp;</span-->
+                    <h2 text-wrap>{{item.nombre_tema}} - No. {{item.numdocumento}}</h2>
+                    <h2 text-wrap><span *ngIf="item.gp==1"><img src="assets/img/gpIcono.png" style="width: 11px;  height: auto;">&nbsp;</span>{{item.descripcion_alerta}}</h2>
+                    <p ion-text color="danger" text-wrap> {{item.alerta}}</p>
+                    <p text-wrap>
+                        {{item.nota}}
+                    </p>
+                    <h6 text-wrap>
+                        <p>{{item.nombre_proyecto}}</p>
+                    </h6>
+                    <p *ngIf="item.enviadoPor != ''">Enviado por: {{item.enviadoPor}}</p>
+                    <img *ngIf="item.archivo_nombre!=null" [src]="returnPathFile('http://142.4.197.18:8000/', item.archivo_nombre)" alt="">
+                    <ion-note item-right>
+                        {{item.fecha | date: 'dd/MM'}}
+                    </ion-note>
+                    <ion-icon class="flechaNext" name="ios-arrow-forward" icon-rigth></ion-icon>
+                </ion-item>
+            </a>
+        </div>
+    </ion-list>
+</ion-content>
+<ion-footer no-border>
+    <ion-toolbar>
+        <ion-buttons start>
+            <button ion-button icon-only color="primary" (click)="getFiltro()"><ion-icon name="md-funnel"></ion-icon></button>
+        </ion-buttons>
+        <ion-title>
+            {{tituloConstructor}}
+        </ion-title>
+        <ion-buttons end>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-footer>

@@ -1,0 +1,24 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons start>
+            <button ion-button icon-only icon-left clear block (click)="returnDirectory()"><ion-icon name="arrow-dropup-circle"></ion-icon></button>
+        </ion-buttons>
+        <ion-buttons end>
+            <button ion-button icon-only icon-left clear block (click)="cancelar()" color="danger"><ion-icon name="ios-close-circle-outline"></ion-icon></button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content text-center class="icons-basic-page">
+    <ion-row>
+        <ion-col *ngFor="let item of ListDir">
+            <a *ngIf="item.directorio" href="#" (click)="openDirectory(item.nativeUrl)">
+                <ion-icon name="folder" color="primary"></ion-icon>
+            </a>
+            <a *ngIf="!item.directorio" href="#" (click)="returnFileFullPath(item)">
+                <ion-icon name="document" color="primary"></ion-icon>
+            </a>
+            <ion-title>{{item.nombre}}</ion-title>
+        </ion-col>
+    </ion-row>
+</ion-content>

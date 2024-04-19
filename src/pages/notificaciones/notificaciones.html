@@ -1,0 +1,81 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+            Notificaciones
+        </ion-title>
+        <ion-buttons end>
+            <button ion-button large icon-right color="primary" (click)="menuBoss()"><ion-icon name="ios-menu"></ion-icon></button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <ion-refresher (ionRefresh)="refrescarDatos($event)">
+        <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="" refreshingSpinner="circles" refreshingText="Cargando...">
+            
+        </ion-refresher-content>
+    </ion-refresher>
+    <ion-list *ngFor="let item of Notificaciones;">
+        <ion-item >
+                    <ion-thumbnail item-left *ngIf = "DatosUsuario.so == 'ios'">
+                            <img *ngIf="item.tipo == 1 || item.tipo == 2 || item.tipo == 3" class="ImagenLogo" src="assets/img/{{item.logo}}">
+                            <img *ngIf="item.tipo == 4" class="ImagenLogo" src="assets/co/{{item.logo}}">
+                            <img *ngIf="item.tipo == 5 || item.tipo == 6" class="ImagenLogo" src="assets/ve/{{item.logo}}">
+                    </ion-thumbnail>
+                    <ion-thumbnail class = "temaAndroid" item-left *ngIf = "DatosUsuario.so == 'android'">
+                            <img *ngIf="item.tipo == 1 || item.tipo == 2 || item.tipo == 3" class="ImagenLogo" src="assets/img/{{item.logo}}">
+                            <img *ngIf="item.tipo == 4" class="ImagenLogo" src="assets/co/{{item.logo}}">
+                            <img *ngIf="item.tipo == 5 || item.tipo == 6" class="ImagenLogo" src="assets/ve/{{item.logo}}">
+                    </ion-thumbnail>
+                        <ion-grid (click)="irSeleccionado(item)" >
+                                <span>
+                                <ion-row>
+                                    <ion-col col-8>
+                                        <h2 text-wrap>{{item.responsable}}</h2>
+                                    </ion-col>
+                                    <ion-col col-2>
+                                        <h4><span class="FechaLogo" [ngStyle]="{'color': '#488aff'}">{{item.fecha | lapsoTiempo}}</span></h4>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row *ngIf="item.accion != ''">
+                                    <ion-col>
+                                        <p *ngIf = "item.tipo == 1" [ngStyle] = "{'color': 'red'}" text-wrap>{{item.accion}}</p>
+                                        <p *ngIf = "item.tipo != 1" text-wrap>{{item.accion}}</p>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col>
+                                            <p text-wrap><span>{{item.tema_descr}}<span *ngIf="(item.tipo == 1 || item.tipo == 2 || item.tipo == 4) && item.encabezado != ''"> - No.{{item.encabezado}}</span><p *ngIf="(item.tipo == 3 || item.tipo == 5 || item.tipo == 6) && item.encabezado != ''">{{item.encabezado}}</p></span></p> 
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col>
+                                        <p [ngStyle]="{'color': '#488aff'}" text-wrap>{{item.proyecto_nombre}}</p>
+                                    </ion-col>
+                                </ion-row> 
+                                <ion-row *ngIf="item.estatus != '' ">
+                                    <ion-col>
+                                         <p class="Texto" [ngStyle] = "{'color': item.estatus_color}" text-wrap>{{item.estatus}}</p>
+                                    </ion-col>
+                                </ion-row>                         
+                                <ion-row *ngIf="item.monto > 0 ">
+                                        <ion-col>
+                                             <p class="Texto" text-wrap>$<span data-format="#.000">{{item.monto | number}}</span></p>
+                                        </ion-col>
+                                </ion-row>
+                                </span>
+                            </ion-grid>
+            <img class="imagenItem" *ngIf="item.imagen != '' && item.parametro_imagen == '1'" [src]="returnPathFile(item.imagen)" alt="">
+            <ion-buttons class="BorrarLogo" end>
+                <button ion-button icon-only clear (click)="borrarNotificaciones(item)"><ion-icon name="ios-trash-outline"></ion-icon></button>
+            </ion-buttons>
+            
+        </ion-item>
+    </ion-list>
+</ion-content>
+<ion-footer>
+    <ion-toolbar>
+        <ion-buttons end>
+                <button ion-button large icon-right color="primary" (click)="navParametros()"><ion-icon name="ios-settings-outline"></ion-icon></button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-footer>
